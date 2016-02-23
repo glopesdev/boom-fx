@@ -11,7 +11,7 @@
       <Expression xsi:type="Combinator">
         <Combinator xsi:type="q1:CreateTranslation">
           <q1:X>0</q1:X>
-          <q1:Y>3152.81714</q1:Y>
+          <q1:Y>2830.41357</q1:Y>
           <q1:Z>0</q1:Z>
         </Combinator>
       </Expression>
@@ -57,13 +57,13 @@
                   <Expression xsi:type="Combinator">
                     <Combinator xsi:type="q1:CreateLookAt">
                       <q1:Eye>
-                        <q1:X>100</q1:X>
-                        <q1:Y>3132.81714</q1:Y>
+                        <q1:X>79</q1:X>
+                        <q1:Y>2810.41357</q1:Y>
                         <q1:Z>0</q1:Z>
                       </q1:Eye>
                       <q1:Target>
                         <q1:X>0</q1:X>
-                        <q1:Y>3132.81714</q1:Y>
+                        <q1:Y>2810.41357</q1:Y>
                         <q1:Z>0</q1:Z>
                       </q1:Target>
                       <q1:Up>
@@ -97,7 +97,7 @@
                   </Expression>
                   <Expression xsi:type="Combinator">
                     <Combinator xsi:type="q1:CreateVector3">
-                      <q1:X>100</q1:X>
+                      <q1:X>79</q1:X>
                       <q1:Y>-20</q1:Y>
                       <q1:Z>0</q1:Z>
                     </Combinator>
@@ -123,6 +123,25 @@
                     <Combinator xsi:type="CombineLatest" />
                   </Expression>
                   <Expression xsi:type="Add" />
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="q1:CreateRotationY">
+                      <q1:Angle>41.98</q1:Angle>
+                    </Combinator>
+                  </Expression>
+                  <Expression xsi:type="InputMapping">
+                    <PropertyMappings>
+                      <Property name="Angle" />
+                    </PropertyMappings>
+                  </Expression>
+                  <Expression xsi:type="Multiply">
+                    <Operand xsi:type="DoubleProperty">
+                      <Value>0</Value>
+                    </Operand>
+                  </Expression>
+                  <Expression xsi:type="q2:ExpressionTransform">
+                    <q2:Expression>0.005</q2:Expression>
+                  </Expression>
+                  <Expression xsi:type="Accumulate" />
                 </Nodes>
                 <Edges>
                   <Edge>
@@ -133,7 +152,7 @@
                   <Edge>
                     <From>1</From>
                     <To>5</To>
-                    <Label>Source1</Label>
+                    <Label>Source2</Label>
                   </Edge>
                   <Edge>
                     <From>2</From>
@@ -181,6 +200,11 @@
                     <Label>Source1</Label>
                   </Edge>
                   <Edge>
+                    <From>11</From>
+                    <To>19</To>
+                    <Label>Source1</Label>
+                  </Edge>
+                  <Edge>
                     <From>12</From>
                     <To>9</To>
                     <Label>Source1</Label>
@@ -205,6 +229,31 @@
                     <To>11</To>
                     <Label>Source2</Label>
                   </Edge>
+                  <Edge>
+                    <From>16</From>
+                    <To>5</To>
+                    <Label>Source1</Label>
+                  </Edge>
+                  <Edge>
+                    <From>17</From>
+                    <To>16</To>
+                    <Label>Source1</Label>
+                  </Edge>
+                  <Edge>
+                    <From>18</From>
+                    <To>20</To>
+                    <Label>Source1</Label>
+                  </Edge>
+                  <Edge>
+                    <From>19</From>
+                    <To>18</To>
+                    <Label>Source1</Label>
+                  </Edge>
+                  <Edge>
+                    <From>20</From>
+                    <To>17</To>
+                    <Label>Source1</Label>
+                  </Edge>
                 </Edges>
               </Workflow>
             </Expression>
@@ -222,6 +271,7 @@
               <Combinator xsi:type="q1:WindowClosed" />
             </Expression>
             <Expression xsi:type="SelectMany">
+              <Name>SpawnTuna</Name>
               <Workflow>
                 <Nodes>
                   <Expression xsi:type="q2:ExpressionTransform">
@@ -2455,9 +2505,9 @@ Item5 as Id
                         </Expression>
                         <Expression xsi:type="Combinator">
                           <Combinator xsi:type="q1:CreateTranslation">
-                            <q1:X>20.4575</q1:X>
-                            <q1:Y>3.07124972</q1:Y>
-                            <q1:Z>-27.0612488</q1:Z>
+                            <q1:X>-0.160000324</q1:X>
+                            <q1:Y>0.108749866</q1:Y>
+                            <q1:Z>17.89375</q1:Z>
                           </Combinator>
                         </Expression>
                         <Expression xsi:type="SubscribeSubject">
@@ -2588,17 +2638,17 @@ Item5 as Id
                               </Expression>
                               <Expression xsi:type="Combinator">
                                 <Combinator xsi:type="q1:CreateRotationY">
-                                  <q1:Angle>0.006581664</q1:Angle>
+                                  <q1:Angle>0.000217497349</q1:Angle>
                                 </Combinator>
                               </Expression>
                               <Expression xsi:type="Combinator">
                                 <Combinator xsi:type="q1:CreateRotationX">
-                                  <q1:Angle>-0.0133975</q1:Angle>
+                                  <q1:Angle>-7.66664743E-05</q1:Angle>
                                 </Combinator>
                               </Expression>
                               <Expression xsi:type="Combinator">
                                 <Combinator xsi:type="q1:CreateRotationZ">
-                                  <q1:Angle>-0.00629333267</q1:Angle>
+                                  <q1:Angle>7.583499E-05</q1:Angle>
                                 </Combinator>
                               </Expression>
                               <Expression xsi:type="Combinator">
@@ -2690,9 +2740,9 @@ Item5 as Id
                         </Expression>
                         <Expression xsi:type="Combinator">
                           <Combinator xsi:type="q1:CreateScale">
-                            <q1:X>1.830125</q1:X>
-                            <q1:Y>2.8290832</q1:Y>
-                            <q1:Z>2.18533325</q1:Z>
+                            <q1:X>2.49616671</q1:X>
+                            <q1:Y>2.51087475</q1:Y>
+                            <q1:Z>2.50379181</q1:Z>
                           </Combinator>
                         </Expression>
                         <Expression xsi:type="MemberSelector">
@@ -4230,9 +4280,9 @@ Item5 as Id
                         </Expression>
                         <Expression xsi:type="Combinator">
                           <Combinator xsi:type="q1:CreateVector3">
-                            <q1:X>21</q1:X>
+                            <q1:X>0</q1:X>
                             <q1:Y>0</q1:Y>
-                            <q1:Z>-29</q1:Z>
+                            <q1:Z>15</q1:Z>
                           </Combinator>
                         </Expression>
                         <Expression xsi:type="InputMapping">
@@ -4258,7 +4308,7 @@ Item5 as Id
                         </Expression>
                         <Expression xsi:type="Subtract">
                           <Operand xsi:type="IntProperty">
-                            <Value>50</Value>
+                            <Value>55</Value>
                           </Operand>
                         </Expression>
                         <Expression xsi:type="Combinator">
@@ -5262,9 +5312,9 @@ Item5 as Id
                       <Nodes>
                         <Expression xsi:type="Combinator">
                           <Combinator xsi:type="q1:CreateVector3">
-                            <q1:X>-0.249874964</q1:X>
-                            <q1:Y>2.04816651</q1:Y>
-                            <q1:Z>2.68525</q1:Z>
+                            <q1:X>2.49954176</q1:X>
+                            <q1:Y>2.49566674</q1:Y>
+                            <q1:Z>2.49962521</q1:Z>
                           </Combinator>
                         </Expression>
                         <Expression xsi:type="InputMapping">
@@ -5304,9 +5354,9 @@ Item5 as Id
                       <Nodes>
                         <Expression xsi:type="Combinator">
                           <Combinator xsi:type="q1:CreateVector3">
-                            <q1:X>0.6687498</q1:X>
-                            <q1:Y>0.647500157</q1:Y>
-                            <q1:Z>-0.0162494183</q1:Z>
+                            <q1:X>-0.0024998188</q1:X>
+                            <q1:Y>0.05374968</q1:Y>
+                            <q1:Z>2.92000055</q1:Z>
                           </Combinator>
                         </Expression>
                         <Expression xsi:type="InputMapping">
@@ -5346,9 +5396,9 @@ Item5 as Id
                       <Nodes>
                         <Expression xsi:type="Combinator">
                           <Combinator xsi:type="q1:CreateVector3">
-                            <q1:X>0.100972205</q1:X>
-                            <q1:Y>1.35000014</q1:Y>
-                            <q1:Z>-0.4773612</q1:Z>
+                            <q1:X>1.09875</q1:X>
+                            <q1:Y>0.70652777</q1:Y>
+                            <q1:Z>0.274027765</q1:Z>
                           </Combinator>
                         </Expression>
                         <Expression xsi:type="InputMapping">
@@ -5647,9 +5697,9 @@ Item5 as Id
                       <Nodes>
                         <Expression xsi:type="Combinator">
                           <Combinator xsi:type="q1:CreateVector3">
-                            <q1:X>-0.0549975</q1:X>
-                            <q1:Y>-0.00903666951</q1:Y>
-                            <q1:Z>0.003705001</q1:Z>
+                            <q1:X>-9.167195E-06</q1:X>
+                            <q1:Y>-8.666515E-05</q1:Y>
+                            <q1:Z>-7.49826449E-06</q1:Z>
                           </Combinator>
                         </Expression>
                         <Expression xsi:type="InputMapping">
@@ -5979,6 +6029,8 @@ Item5 as Id
     <Type>Bonsai.Shaders.CreateVector3, Bonsai.Shaders, Version=0.10.0.0, Culture=neutral, PublicKeyToken=null</Type>
     <Type>Bonsai.Expressions.AddBuilder, Bonsai.Core, Version=2.2.0.0, Culture=neutral, PublicKeyToken=null</Type>
     <Type>Bonsai.Reactive.Zip, Bonsai.Core, Version=2.2.0.0, Culture=neutral, PublicKeyToken=null</Type>
+    <Type>Bonsai.Shaders.CreateRotationY, Bonsai.Shaders, Version=0.10.0.0, Culture=neutral, PublicKeyToken=null</Type>
+    <Type>Bonsai.Expressions.DoubleProperty, Bonsai.Core, Version=2.2.0.0, Culture=neutral, PublicKeyToken=null</Type>
     <Type>Bonsai.Reactive.GroupByBuilder, Bonsai.Core, Version=2.2.0.0, Culture=neutral, PublicKeyToken=null</Type>
     <Type>Bonsai.Shaders.WindowClosed, Bonsai.Shaders, Version=0.10.0.0, Culture=neutral, PublicKeyToken=null</Type>
     <Type>Bonsai.Dsp.Rescale, Bonsai.Dsp, Version=2.2.0.0, Culture=neutral, PublicKeyToken=null</Type>
@@ -5993,7 +6045,6 @@ Item5 as Id
     <Type>Bonsai.Shaders.SampleOnUpdateFrame, Bonsai.Shaders, Version=0.10.0.0, Culture=neutral, PublicKeyToken=null</Type>
     <Type>Bonsai.Expressions.ScanBuilder, Bonsai.Core, Version=2.2.0.0, Culture=neutral, PublicKeyToken=null</Type>
     <Type>Bonsai.Reactive.Buffer, Bonsai.Core, Version=2.2.0.0, Culture=neutral, PublicKeyToken=null</Type>
-    <Type>Bonsai.Shaders.CreateRotationY, Bonsai.Shaders, Version=0.10.0.0, Culture=neutral, PublicKeyToken=null</Type>
     <Type>Bonsai.Shaders.CreateRotationX, Bonsai.Shaders, Version=0.10.0.0, Culture=neutral, PublicKeyToken=null</Type>
     <Type>Bonsai.Shaders.CreateRotationZ, Bonsai.Shaders, Version=0.10.0.0, Culture=neutral, PublicKeyToken=null</Type>
     <Type>Bonsai.Shaders.CreateScale, Bonsai.Shaders, Version=0.10.0.0, Culture=neutral, PublicKeyToken=null</Type>
