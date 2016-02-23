@@ -6,7 +6,7 @@
         <Combinator xsi:type="q1:UpdateFrame" />
       </Expression>
       <Expression xsi:type="q2:ExpressionTransform">
-        <q2:Expression>it * 100</q2:Expression>
+        <q2:Expression>it * 25</q2:Expression>
       </Expression>
       <Expression xsi:type="Combinator">
         <Combinator xsi:type="q1:CreateTranslation">
@@ -4504,6 +4504,25 @@ Item5 as Id
                             <Value>50</Value>
                           </Operand>
                         </Expression>
+                        <Expression xsi:type="Combinator">
+                          <Combinator xsi:type="Slice">
+                            <Start>0</Start>
+                            <Step>2</Step>
+                            <Stop xsi:nil="true" />
+                          </Combinator>
+                        </Expression>
+                        <Expression xsi:type="Combinator">
+                          <Combinator xsi:type="CombineLatest" />
+                        </Expression>
+                        <Expression xsi:type="Combinator">
+                          <Combinator xsi:type="q1:UpdateFrame" />
+                        </Expression>
+                        <Expression xsi:type="Combinator">
+                          <Combinator xsi:type="Sample" />
+                        </Expression>
+                        <Expression xsi:type="MemberSelector">
+                          <Selector>Source.Item1</Selector>
+                        </Expression>
                       </Nodes>
                       <Edges>
                         <Edge>
@@ -4613,7 +4632,7 @@ Item5 as Id
                         </Edge>
                         <Edge>
                           <From>17</From>
-                          <To>10</To>
+                          <To>41</To>
                           <Label>Source1</Label>
                         </Edge>
                         <Edge>
@@ -4643,7 +4662,7 @@ Item5 as Id
                         </Edge>
                         <Edge>
                           <From>24</From>
-                          <To>17</To>
+                          <To>40</To>
                           <Label>Source1</Label>
                         </Edge>
                         <Edge>
@@ -4709,6 +4728,36 @@ Item5 as Id
                         <Edge>
                           <From>39</From>
                           <To>33</To>
+                          <Label>Source1</Label>
+                        </Edge>
+                        <Edge>
+                          <From>40</From>
+                          <To>17</To>
+                          <Label>Source1</Label>
+                        </Edge>
+                        <Edge>
+                          <From>41</From>
+                          <To>43</To>
+                          <Label>Source1</Label>
+                        </Edge>
+                        <Edge>
+                          <From>42</From>
+                          <To>41</To>
+                          <Label>Source2</Label>
+                        </Edge>
+                        <Edge>
+                          <From>42</From>
+                          <To>43</To>
+                          <Label>Source2</Label>
+                        </Edge>
+                        <Edge>
+                          <From>43</From>
+                          <To>44</To>
+                          <Label>Source1</Label>
+                        </Edge>
+                        <Edge>
+                          <From>44</From>
+                          <To>10</To>
                           <Label>Source1</Label>
                         </Edge>
                       </Edges>
@@ -6957,6 +7006,7 @@ Item5 as Id
     <Type>Bonsai.Shaders.CreateScale, Bonsai.Shaders, Version=0.10.0.0, Culture=neutral, PublicKeyToken=null</Type>
     <Type>Bonsai.Expressions.ModBuilder, Bonsai.Core, Version=2.2.0.0, Culture=neutral, PublicKeyToken=null</Type>
     <Type>Bonsai.Expressions.SubtractBuilder, Bonsai.Core, Version=2.2.0.0, Culture=neutral, PublicKeyToken=null</Type>
+    <Type>Bonsai.Reactive.Slice, Bonsai.Core, Version=2.2.0.0, Culture=neutral, PublicKeyToken=null</Type>
     <Type>Bonsai.Dsp.SelectChannels, Bonsai.Dsp, Version=2.2.0.0, Culture=neutral, PublicKeyToken=null</Type>
     <Type>Bonsai.Dsp.Average, Bonsai.Dsp, Version=2.2.0.0, Culture=neutral, PublicKeyToken=null</Type>
     <Type>Bonsai.Dsp.Buffer, Bonsai.Dsp, Version=2.2.0.0, Culture=neutral, PublicKeyToken=null</Type>
