@@ -1,17 +1,17 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <WorkflowBuilder Version="2.2.0">
-  <Workflow xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:q1="clr-namespace:Bonsai.Shaders;assembly=Bonsai.Shaders" xmlns:q2="clr-namespace:Bonsai.Scripting;assembly=Bonsai.Scripting" xmlns:q3="clr-namespace:Bonsai.ChampalimaudHardware;assembly=Bonsai.ChampalimaudHardware" xmlns:q4="clr-namespace:Bonsai.Shaders.Input;assembly=Bonsai.Shaders" xmlns:q5="clr-namespace:Bonsai.Dsp;assembly=Bonsai.Dsp" xmlns="https://horizongir.org/bonsai">
+  <Workflow xmlns:q2="clr-namespace:Bonsai.Scripting;assembly=Bonsai.Scripting" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:q3="clr-namespace:Bonsai.ChampalimaudHardware;assembly=Bonsai.ChampalimaudHardware" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:q5="clr-namespace:Bonsai.Dsp;assembly=Bonsai.Dsp" xmlns:q4="clr-namespace:Bonsai.Shaders.Input;assembly=Bonsai.Shaders" xmlns:q1="clr-namespace:Bonsai.Shaders;assembly=Bonsai.Shaders" xmlns="https://horizongir.org/bonsai">
     <Nodes>
       <Expression xsi:type="Combinator">
         <Combinator xsi:type="q1:UpdateFrame" />
       </Expression>
       <Expression xsi:type="q2:ExpressionTransform">
-        <q2:Expression>it * 50</q2:Expression>
+        <q2:Expression>it * 100</q2:Expression>
       </Expression>
       <Expression xsi:type="Combinator">
         <Combinator xsi:type="q1:CreateTranslation">
           <q1:X>0</q1:X>
-          <q1:Y>1729.25684</q1:Y>
+          <q1:Y>124.359711</q1:Y>
           <q1:Z>0</q1:Z>
         </Combinator>
       </Expression>
@@ -61,12 +61,12 @@
                     <Combinator xsi:type="q1:CreateLookAt">
                       <q1:Eye>
                         <q1:X>100</q1:X>
-                        <q1:Y>1699.25684</q1:Y>
+                        <q1:Y>104.341614</q1:Y>
                         <q1:Z>0</q1:Z>
                       </q1:Eye>
                       <q1:Target>
                         <q1:X>0</q1:X>
-                        <q1:Y>1699.25684</q1:Y>
+                        <q1:Y>104.341614</q1:Y>
                         <q1:Z>0</q1:Z>
                       </q1:Target>
                       <q1:Up>
@@ -101,7 +101,7 @@
                   <Expression xsi:type="Combinator">
                     <Combinator xsi:type="q1:CreateVector3">
                       <q1:X>100</q1:X>
-                      <q1:Y>-30</q1:Y>
+                      <q1:Y>-20</q1:Y>
                       <q1:Z>0</q1:Z>
                     </Combinator>
                   </Expression>
@@ -118,7 +118,7 @@
                   <Expression xsi:type="Combinator">
                     <Combinator xsi:type="q1:CreateVector3">
                       <q1:X>0</q1:X>
-                      <q1:Y>-30</q1:Y>
+                      <q1:Y>-20</q1:Y>
                       <q1:Z>0</q1:Z>
                     </Combinator>
                   </Expression>
@@ -1398,6 +1398,1119 @@ Item5 as Id
                                   </Edges>
                                 </Workflow>
                               </Expression>
+                              <Expression xsi:type="Sink">
+                                <Name>DrawTetrahedron</Name>
+                                <Workflow>
+                                  <Nodes>
+                                    <Expression xsi:type="Combinator">
+                                      <Combinator xsi:type="q1:UpdateUniform">
+                                        <q1:UniformName>lightposition</q1:UniformName>
+                                        <q1:ShaderName>TetrahedronLight</q1:ShaderName>
+                                      </Combinator>
+                                    </Expression>
+                                    <Expression xsi:type="WorkflowOutput" />
+                                    <Expression xsi:type="Combinator">
+                                      <Combinator xsi:type="q1:UpdateUniform">
+                                        <q1:UniformName>mv</q1:UniformName>
+                                        <q1:ShaderName>TetrahedronLight</q1:ShaderName>
+                                      </Combinator>
+                                    </Expression>
+                                    <Expression xsi:type="SubscribeSubject">
+                                      <Name>Light</Name>
+                                    </Expression>
+                                    <Expression xsi:type="Combinator">
+                                      <Combinator xsi:type="q1:DrawShader">
+                                        <q1:ShaderName>TetrahedronLight</q1:ShaderName>
+                                        <q1:DrawMode>LineLoop</q1:DrawMode>
+                                      </Combinator>
+                                    </Expression>
+                                    <Expression xsi:type="Multiply" />
+                                    <Expression xsi:type="Sink">
+                                      <Name>SetWhite</Name>
+                                      <Workflow>
+                                        <Nodes>
+                                          <Expression xsi:type="WorkflowInput">
+                                            <Name>Source1</Name>
+                                          </Expression>
+                                          <Expression xsi:type="WorkflowOutput" />
+                                          <Expression xsi:type="q2:ExpressionTransform">
+                                            <q2:Expression>1.0f</q2:Expression>
+                                          </Expression>
+                                          <Expression xsi:type="MemberSelector">
+                                            <Selector>Source,Source,Source</Selector>
+                                          </Expression>
+                                          <Expression xsi:type="Combinator">
+                                            <Combinator xsi:type="q1:UpdateUniform">
+                                              <q1:UniformName>color</q1:UniformName>
+                                              <q1:ShaderName>TetrahedronLight</q1:ShaderName>
+                                            </Combinator>
+                                          </Expression>
+                                          <Expression xsi:type="ExternalizedPropertyOfStringUpdateUniform">
+                                            <MemberName>ShaderName</MemberName>
+                                            <Name>ShaderName</Name>
+                                            <Value>TetrahedronLight</Value>
+                                          </Expression>
+                                        </Nodes>
+                                        <Edges>
+                                          <Edge>
+                                            <From>0</From>
+                                            <To>2</To>
+                                            <Label>Source1</Label>
+                                          </Edge>
+                                          <Edge>
+                                            <From>2</From>
+                                            <To>3</To>
+                                            <Label>Source1</Label>
+                                          </Edge>
+                                          <Edge>
+                                            <From>3</From>
+                                            <To>4</To>
+                                            <Label>Source1</Label>
+                                          </Edge>
+                                          <Edge>
+                                            <From>4</From>
+                                            <To>1</To>
+                                            <Label>Source1</Label>
+                                          </Edge>
+                                          <Edge>
+                                            <From>5</From>
+                                            <To>4</To>
+                                            <Label>Source2</Label>
+                                          </Edge>
+                                        </Edges>
+                                      </Workflow>
+                                    </Expression>
+                                    <Expression xsi:type="MemberSelector">
+                                      <Selector>Source.Item1,Source.Item2.Item2</Selector>
+                                    </Expression>
+                                    <Expression xsi:type="Combinator">
+                                      <Combinator xsi:type="q1:DrawShader">
+                                        <q1:ShaderName>TetrahedronLight</q1:ShaderName>
+                                        <q1:DrawMode>Triangles</q1:DrawMode>
+                                      </Combinator>
+                                    </Expression>
+                                    <Expression xsi:type="Sink">
+                                      <Name>SetColor</Name>
+                                      <Workflow>
+                                        <Nodes>
+                                          <Expression xsi:type="WorkflowInput">
+                                            <Name>Source1</Name>
+                                          </Expression>
+                                          <Expression xsi:type="WorkflowOutput" />
+                                          <Expression xsi:type="Combinator">
+                                            <Combinator xsi:type="q1:UpdateUniform">
+                                              <q1:UniformName>color</q1:UniformName>
+                                              <q1:ShaderName>TetrahedronLight</q1:ShaderName>
+                                            </Combinator>
+                                          </Expression>
+                                          <Expression xsi:type="ExternalizedPropertyOfStringUpdateUniform">
+                                            <MemberName>ShaderName</MemberName>
+                                            <Name>ShaderName</Name>
+                                            <Value>TetrahedronLight</Value>
+                                          </Expression>
+                                          <Expression xsi:type="SubscribeSubject">
+                                            <Name>TunaData</Name>
+                                          </Expression>
+                                          <Expression xsi:type="MemberSelector">
+                                            <Selector>Source.Color</Selector>
+                                          </Expression>
+                                          <Expression xsi:type="Combinator">
+                                            <Combinator xsi:type="CombineLatest" />
+                                          </Expression>
+                                          <Expression xsi:type="Combinator">
+                                            <Combinator xsi:type="Sample" />
+                                          </Expression>
+                                          <Expression xsi:type="MemberSelector">
+                                            <Selector>Source.Item2</Selector>
+                                          </Expression>
+                                        </Nodes>
+                                        <Edges>
+                                          <Edge>
+                                            <From>0</From>
+                                            <To>6</To>
+                                            <Label>Source1</Label>
+                                          </Edge>
+                                          <Edge>
+                                            <From>0</From>
+                                            <To>7</To>
+                                            <Label>Source2</Label>
+                                          </Edge>
+                                          <Edge>
+                                            <From>2</From>
+                                            <To>1</To>
+                                            <Label>Source1</Label>
+                                          </Edge>
+                                          <Edge>
+                                            <From>3</From>
+                                            <To>2</To>
+                                            <Label>Source2</Label>
+                                          </Edge>
+                                          <Edge>
+                                            <From>4</From>
+                                            <To>5</To>
+                                            <Label>Source1</Label>
+                                          </Edge>
+                                          <Edge>
+                                            <From>5</From>
+                                            <To>6</To>
+                                            <Label>Source2</Label>
+                                          </Edge>
+                                          <Edge>
+                                            <From>6</From>
+                                            <To>7</To>
+                                            <Label>Source1</Label>
+                                          </Edge>
+                                          <Edge>
+                                            <From>7</From>
+                                            <To>8</To>
+                                            <Label>Source1</Label>
+                                          </Edge>
+                                          <Edge>
+                                            <From>8</From>
+                                            <To>2</To>
+                                            <Label>Source1</Label>
+                                          </Edge>
+                                        </Edges>
+                                      </Workflow>
+                                    </Expression>
+                                    <Expression xsi:type="Combinator">
+                                      <Combinator xsi:type="q1:UpdateUniform">
+                                        <q1:UniformName>mvp</q1:UniformName>
+                                        <q1:ShaderName>TetrahedronLight</q1:ShaderName>
+                                      </Combinator>
+                                    </Expression>
+                                    <Expression xsi:type="Multiply" />
+                                    <Expression xsi:type="ExternalizedPropertyOfStringUpdateUniform">
+                                      <MemberName>ShaderName</MemberName>
+                                      <Name>ShaderName</Name>
+                                      <Value>TetrahedronLight</Value>
+                                    </Expression>
+                                    <Expression xsi:type="MemberSelector">
+                                      <Selector>Source.Item1,Source.Item2.Item1</Selector>
+                                    </Expression>
+                                    <Expression xsi:type="Combinator">
+                                      <Combinator xsi:type="q1:SampleOnUpdateFrame" />
+                                    </Expression>
+                                    <Expression xsi:type="Combinator">
+                                      <Combinator xsi:type="CombineLatest" />
+                                    </Expression>
+                                    <Expression xsi:type="WorkflowInput">
+                                      <Name>Source1</Name>
+                                    </Expression>
+                                    <Expression xsi:type="Combinator">
+                                      <Combinator xsi:type="Zip" />
+                                    </Expression>
+                                    <Expression xsi:type="SubscribeSubject">
+                                      <Name>ViewProjection</Name>
+                                    </Expression>
+                                    <Expression xsi:type="SubscribeSubject">
+                                      <Name>ViewMatrix</Name>
+                                    </Expression>
+                                  </Nodes>
+                                  <Edges>
+                                    <Edge>
+                                      <From>3</From>
+                                      <To>0</To>
+                                      <Label>Source1</Label>
+                                    </Edge>
+                                    <Edge>
+                                      <From>4</From>
+                                      <To>1</To>
+                                      <Label>Source1</Label>
+                                    </Edge>
+                                    <Edge>
+                                      <From>5</From>
+                                      <To>2</To>
+                                      <Label>Source1</Label>
+                                    </Edge>
+                                    <Edge>
+                                      <From>6</From>
+                                      <To>4</To>
+                                      <Label>Source1</Label>
+                                    </Edge>
+                                    <Edge>
+                                      <From>7</From>
+                                      <To>5</To>
+                                      <Label>Source1</Label>
+                                    </Edge>
+                                    <Edge>
+                                      <From>8</From>
+                                      <To>6</To>
+                                      <Label>Source1</Label>
+                                    </Edge>
+                                    <Edge>
+                                      <From>9</From>
+                                      <To>8</To>
+                                      <Label>Source1</Label>
+                                    </Edge>
+                                    <Edge>
+                                      <From>10</From>
+                                      <To>9</To>
+                                      <Label>Source1</Label>
+                                    </Edge>
+                                    <Edge>
+                                      <From>11</From>
+                                      <To>10</To>
+                                      <Label>Source1</Label>
+                                    </Edge>
+                                    <Edge>
+                                      <From>12</From>
+                                      <To>10</To>
+                                      <Label>Source2</Label>
+                                    </Edge>
+                                    <Edge>
+                                      <From>12</From>
+                                      <To>8</To>
+                                      <Label>Source2</Label>
+                                    </Edge>
+                                    <Edge>
+                                      <From>12</From>
+                                      <To>4</To>
+                                      <Label>Source2</Label>
+                                    </Edge>
+                                    <Edge>
+                                      <From>12</From>
+                                      <To>9</To>
+                                      <Label>Source2</Label>
+                                    </Edge>
+                                    <Edge>
+                                      <From>12</From>
+                                      <To>6</To>
+                                      <Label>Source2</Label>
+                                    </Edge>
+                                    <Edge>
+                                      <From>12</From>
+                                      <To>2</To>
+                                      <Label>Source2</Label>
+                                    </Edge>
+                                    <Edge>
+                                      <From>12</From>
+                                      <To>0</To>
+                                      <Label>Source2</Label>
+                                    </Edge>
+                                    <Edge>
+                                      <From>13</From>
+                                      <To>11</To>
+                                      <Label>Source1</Label>
+                                    </Edge>
+                                    <Edge>
+                                      <From>14</From>
+                                      <To>13</To>
+                                      <Label>Source1</Label>
+                                    </Edge>
+                                    <Edge>
+                                      <From>14</From>
+                                      <To>7</To>
+                                      <Label>Source1</Label>
+                                    </Edge>
+                                    <Edge>
+                                      <From>15</From>
+                                      <To>14</To>
+                                      <Label>Source1</Label>
+                                    </Edge>
+                                    <Edge>
+                                      <From>16</From>
+                                      <To>15</To>
+                                      <Label>Source1</Label>
+                                    </Edge>
+                                    <Edge>
+                                      <From>17</From>
+                                      <To>15</To>
+                                      <Label>Source2</Label>
+                                    </Edge>
+                                    <Edge>
+                                      <From>18</From>
+                                      <To>17</To>
+                                      <Label>Source1</Label>
+                                    </Edge>
+                                    <Edge>
+                                      <From>19</From>
+                                      <To>17</To>
+                                      <Label>Source2</Label>
+                                    </Edge>
+                                  </Edges>
+                                </Workflow>
+                              </Expression>
+                              <Expression xsi:type="MemberSelector">
+                                <Selector>Source.Item1</Selector>
+                              </Expression>
+                              <Expression xsi:type="Condition">
+                                <Workflow>
+                                  <Nodes>
+                                    <Expression xsi:type="WorkflowInput">
+                                      <Name>Source1</Name>
+                                    </Expression>
+                                    <Expression xsi:type="WorkflowOutput" />
+                                    <Expression xsi:type="Equal">
+                                      <Operand xsi:type="IntProperty">
+                                        <Value>2</Value>
+                                      </Operand>
+                                    </Expression>
+                                    <Expression xsi:type="MemberSelector">
+                                      <Selector>Source.Item2</Selector>
+                                    </Expression>
+                                  </Nodes>
+                                  <Edges>
+                                    <Edge>
+                                      <From>0</From>
+                                      <To>3</To>
+                                      <Label>Source1</Label>
+                                    </Edge>
+                                    <Edge>
+                                      <From>2</From>
+                                      <To>1</To>
+                                      <Label>Source1</Label>
+                                    </Edge>
+                                    <Edge>
+                                      <From>3</From>
+                                      <To>2</To>
+                                      <Label>Source1</Label>
+                                    </Edge>
+                                  </Edges>
+                                </Workflow>
+                              </Expression>
+                              <Expression xsi:type="Sink">
+                                <Name>DrawOctahedron</Name>
+                                <Workflow>
+                                  <Nodes>
+                                    <Expression xsi:type="Combinator">
+                                      <Combinator xsi:type="q1:UpdateUniform">
+                                        <q1:UniformName>lightposition</q1:UniformName>
+                                        <q1:ShaderName>TetrahedronLight</q1:ShaderName>
+                                      </Combinator>
+                                    </Expression>
+                                    <Expression xsi:type="WorkflowOutput" />
+                                    <Expression xsi:type="Combinator">
+                                      <Combinator xsi:type="q1:UpdateUniform">
+                                        <q1:UniformName>mv</q1:UniformName>
+                                        <q1:ShaderName>TetrahedronLight</q1:ShaderName>
+                                      </Combinator>
+                                    </Expression>
+                                    <Expression xsi:type="SubscribeSubject">
+                                      <Name>Light</Name>
+                                    </Expression>
+                                    <Expression xsi:type="Combinator">
+                                      <Combinator xsi:type="q1:DrawShader">
+                                        <q1:ShaderName>TetrahedronLight</q1:ShaderName>
+                                        <q1:DrawMode>LineLoop</q1:DrawMode>
+                                      </Combinator>
+                                    </Expression>
+                                    <Expression xsi:type="Multiply" />
+                                    <Expression xsi:type="Sink">
+                                      <Name>SetWhite</Name>
+                                      <Workflow>
+                                        <Nodes>
+                                          <Expression xsi:type="WorkflowInput">
+                                            <Name>Source1</Name>
+                                          </Expression>
+                                          <Expression xsi:type="WorkflowOutput" />
+                                          <Expression xsi:type="q2:ExpressionTransform">
+                                            <q2:Expression>1.0f</q2:Expression>
+                                          </Expression>
+                                          <Expression xsi:type="MemberSelector">
+                                            <Selector>Source,Source,Source</Selector>
+                                          </Expression>
+                                          <Expression xsi:type="Combinator">
+                                            <Combinator xsi:type="q1:UpdateUniform">
+                                              <q1:UniformName>color</q1:UniformName>
+                                              <q1:ShaderName>TetrahedronLight</q1:ShaderName>
+                                            </Combinator>
+                                          </Expression>
+                                          <Expression xsi:type="ExternalizedPropertyOfStringUpdateUniform">
+                                            <MemberName>ShaderName</MemberName>
+                                            <Name>ShaderName</Name>
+                                            <Value>TetrahedronLight</Value>
+                                          </Expression>
+                                        </Nodes>
+                                        <Edges>
+                                          <Edge>
+                                            <From>0</From>
+                                            <To>2</To>
+                                            <Label>Source1</Label>
+                                          </Edge>
+                                          <Edge>
+                                            <From>2</From>
+                                            <To>3</To>
+                                            <Label>Source1</Label>
+                                          </Edge>
+                                          <Edge>
+                                            <From>3</From>
+                                            <To>4</To>
+                                            <Label>Source1</Label>
+                                          </Edge>
+                                          <Edge>
+                                            <From>4</From>
+                                            <To>1</To>
+                                            <Label>Source1</Label>
+                                          </Edge>
+                                          <Edge>
+                                            <From>5</From>
+                                            <To>4</To>
+                                            <Label>Source2</Label>
+                                          </Edge>
+                                        </Edges>
+                                      </Workflow>
+                                    </Expression>
+                                    <Expression xsi:type="MemberSelector">
+                                      <Selector>Source.Item1,Source.Item2.Item2</Selector>
+                                    </Expression>
+                                    <Expression xsi:type="Combinator">
+                                      <Combinator xsi:type="q1:DrawShader">
+                                        <q1:ShaderName>TetrahedronLight</q1:ShaderName>
+                                        <q1:DrawMode>Triangles</q1:DrawMode>
+                                      </Combinator>
+                                    </Expression>
+                                    <Expression xsi:type="Sink">
+                                      <Name>SetColor</Name>
+                                      <Workflow>
+                                        <Nodes>
+                                          <Expression xsi:type="WorkflowInput">
+                                            <Name>Source1</Name>
+                                          </Expression>
+                                          <Expression xsi:type="WorkflowOutput" />
+                                          <Expression xsi:type="Combinator">
+                                            <Combinator xsi:type="q1:UpdateUniform">
+                                              <q1:UniformName>color</q1:UniformName>
+                                              <q1:ShaderName>TetrahedronLight</q1:ShaderName>
+                                            </Combinator>
+                                          </Expression>
+                                          <Expression xsi:type="ExternalizedPropertyOfStringUpdateUniform">
+                                            <MemberName>ShaderName</MemberName>
+                                            <Name>ShaderName</Name>
+                                            <Value>TetrahedronLight</Value>
+                                          </Expression>
+                                          <Expression xsi:type="SubscribeSubject">
+                                            <Name>TunaData</Name>
+                                          </Expression>
+                                          <Expression xsi:type="MemberSelector">
+                                            <Selector>Source.Color</Selector>
+                                          </Expression>
+                                          <Expression xsi:type="Combinator">
+                                            <Combinator xsi:type="CombineLatest" />
+                                          </Expression>
+                                          <Expression xsi:type="Combinator">
+                                            <Combinator xsi:type="Sample" />
+                                          </Expression>
+                                          <Expression xsi:type="MemberSelector">
+                                            <Selector>Source.Item2</Selector>
+                                          </Expression>
+                                        </Nodes>
+                                        <Edges>
+                                          <Edge>
+                                            <From>0</From>
+                                            <To>6</To>
+                                            <Label>Source1</Label>
+                                          </Edge>
+                                          <Edge>
+                                            <From>0</From>
+                                            <To>7</To>
+                                            <Label>Source2</Label>
+                                          </Edge>
+                                          <Edge>
+                                            <From>2</From>
+                                            <To>1</To>
+                                            <Label>Source1</Label>
+                                          </Edge>
+                                          <Edge>
+                                            <From>3</From>
+                                            <To>2</To>
+                                            <Label>Source2</Label>
+                                          </Edge>
+                                          <Edge>
+                                            <From>4</From>
+                                            <To>5</To>
+                                            <Label>Source1</Label>
+                                          </Edge>
+                                          <Edge>
+                                            <From>5</From>
+                                            <To>6</To>
+                                            <Label>Source2</Label>
+                                          </Edge>
+                                          <Edge>
+                                            <From>6</From>
+                                            <To>7</To>
+                                            <Label>Source1</Label>
+                                          </Edge>
+                                          <Edge>
+                                            <From>7</From>
+                                            <To>8</To>
+                                            <Label>Source1</Label>
+                                          </Edge>
+                                          <Edge>
+                                            <From>8</From>
+                                            <To>2</To>
+                                            <Label>Source1</Label>
+                                          </Edge>
+                                        </Edges>
+                                      </Workflow>
+                                    </Expression>
+                                    <Expression xsi:type="Combinator">
+                                      <Combinator xsi:type="q1:UpdateUniform">
+                                        <q1:UniformName>mvp</q1:UniformName>
+                                        <q1:ShaderName>TetrahedronLight</q1:ShaderName>
+                                      </Combinator>
+                                    </Expression>
+                                    <Expression xsi:type="Multiply" />
+                                    <Expression xsi:type="ExternalizedPropertyOfStringUpdateUniform">
+                                      <MemberName>ShaderName</MemberName>
+                                      <Name>ShaderName</Name>
+                                      <Value>OctahedronLight</Value>
+                                    </Expression>
+                                    <Expression xsi:type="MemberSelector">
+                                      <Selector>Source.Item1,Source.Item2.Item1</Selector>
+                                    </Expression>
+                                    <Expression xsi:type="Combinator">
+                                      <Combinator xsi:type="q1:SampleOnUpdateFrame" />
+                                    </Expression>
+                                    <Expression xsi:type="Combinator">
+                                      <Combinator xsi:type="CombineLatest" />
+                                    </Expression>
+                                    <Expression xsi:type="WorkflowInput">
+                                      <Name>Source1</Name>
+                                    </Expression>
+                                    <Expression xsi:type="Combinator">
+                                      <Combinator xsi:type="Zip" />
+                                    </Expression>
+                                    <Expression xsi:type="SubscribeSubject">
+                                      <Name>ViewProjection</Name>
+                                    </Expression>
+                                    <Expression xsi:type="SubscribeSubject">
+                                      <Name>ViewMatrix</Name>
+                                    </Expression>
+                                  </Nodes>
+                                  <Edges>
+                                    <Edge>
+                                      <From>3</From>
+                                      <To>0</To>
+                                      <Label>Source1</Label>
+                                    </Edge>
+                                    <Edge>
+                                      <From>4</From>
+                                      <To>1</To>
+                                      <Label>Source1</Label>
+                                    </Edge>
+                                    <Edge>
+                                      <From>5</From>
+                                      <To>2</To>
+                                      <Label>Source1</Label>
+                                    </Edge>
+                                    <Edge>
+                                      <From>6</From>
+                                      <To>4</To>
+                                      <Label>Source1</Label>
+                                    </Edge>
+                                    <Edge>
+                                      <From>7</From>
+                                      <To>5</To>
+                                      <Label>Source1</Label>
+                                    </Edge>
+                                    <Edge>
+                                      <From>8</From>
+                                      <To>6</To>
+                                      <Label>Source1</Label>
+                                    </Edge>
+                                    <Edge>
+                                      <From>9</From>
+                                      <To>8</To>
+                                      <Label>Source1</Label>
+                                    </Edge>
+                                    <Edge>
+                                      <From>10</From>
+                                      <To>9</To>
+                                      <Label>Source1</Label>
+                                    </Edge>
+                                    <Edge>
+                                      <From>11</From>
+                                      <To>10</To>
+                                      <Label>Source1</Label>
+                                    </Edge>
+                                    <Edge>
+                                      <From>12</From>
+                                      <To>10</To>
+                                      <Label>Source2</Label>
+                                    </Edge>
+                                    <Edge>
+                                      <From>12</From>
+                                      <To>8</To>
+                                      <Label>Source2</Label>
+                                    </Edge>
+                                    <Edge>
+                                      <From>12</From>
+                                      <To>4</To>
+                                      <Label>Source2</Label>
+                                    </Edge>
+                                    <Edge>
+                                      <From>12</From>
+                                      <To>9</To>
+                                      <Label>Source2</Label>
+                                    </Edge>
+                                    <Edge>
+                                      <From>12</From>
+                                      <To>6</To>
+                                      <Label>Source2</Label>
+                                    </Edge>
+                                    <Edge>
+                                      <From>12</From>
+                                      <To>2</To>
+                                      <Label>Source2</Label>
+                                    </Edge>
+                                    <Edge>
+                                      <From>12</From>
+                                      <To>0</To>
+                                      <Label>Source2</Label>
+                                    </Edge>
+                                    <Edge>
+                                      <From>13</From>
+                                      <To>11</To>
+                                      <Label>Source1</Label>
+                                    </Edge>
+                                    <Edge>
+                                      <From>14</From>
+                                      <To>13</To>
+                                      <Label>Source1</Label>
+                                    </Edge>
+                                    <Edge>
+                                      <From>14</From>
+                                      <To>7</To>
+                                      <Label>Source1</Label>
+                                    </Edge>
+                                    <Edge>
+                                      <From>15</From>
+                                      <To>14</To>
+                                      <Label>Source1</Label>
+                                    </Edge>
+                                    <Edge>
+                                      <From>16</From>
+                                      <To>15</To>
+                                      <Label>Source1</Label>
+                                    </Edge>
+                                    <Edge>
+                                      <From>17</From>
+                                      <To>15</To>
+                                      <Label>Source2</Label>
+                                    </Edge>
+                                    <Edge>
+                                      <From>18</From>
+                                      <To>17</To>
+                                      <Label>Source1</Label>
+                                    </Edge>
+                                    <Edge>
+                                      <From>19</From>
+                                      <To>17</To>
+                                      <Label>Source2</Label>
+                                    </Edge>
+                                  </Edges>
+                                </Workflow>
+                              </Expression>
+                              <Expression xsi:type="MemberSelector">
+                                <Selector>Source.Item1</Selector>
+                              </Expression>
+                              <Expression xsi:type="Condition">
+                                <Workflow>
+                                  <Nodes>
+                                    <Expression xsi:type="WorkflowInput">
+                                      <Name>Source1</Name>
+                                    </Expression>
+                                    <Expression xsi:type="WorkflowOutput" />
+                                    <Expression xsi:type="Equal">
+                                      <Operand xsi:type="IntProperty">
+                                        <Value>3</Value>
+                                      </Operand>
+                                    </Expression>
+                                    <Expression xsi:type="MemberSelector">
+                                      <Selector>Source.Item2</Selector>
+                                    </Expression>
+                                  </Nodes>
+                                  <Edges>
+                                    <Edge>
+                                      <From>0</From>
+                                      <To>3</To>
+                                      <Label>Source1</Label>
+                                    </Edge>
+                                    <Edge>
+                                      <From>2</From>
+                                      <To>1</To>
+                                      <Label>Source1</Label>
+                                    </Edge>
+                                    <Edge>
+                                      <From>3</From>
+                                      <To>2</To>
+                                      <Label>Source1</Label>
+                                    </Edge>
+                                  </Edges>
+                                </Workflow>
+                              </Expression>
+                              <Expression xsi:type="Sink">
+                                <Name>DrawDodecahedron</Name>
+                                <Workflow>
+                                  <Nodes>
+                                    <Expression xsi:type="Combinator">
+                                      <Combinator xsi:type="q1:UpdateUniform">
+                                        <q1:UniformName>lightposition</q1:UniformName>
+                                        <q1:ShaderName>TetrahedronLight</q1:ShaderName>
+                                      </Combinator>
+                                    </Expression>
+                                    <Expression xsi:type="WorkflowOutput" />
+                                    <Expression xsi:type="Combinator">
+                                      <Combinator xsi:type="q1:UpdateUniform">
+                                        <q1:UniformName>mv</q1:UniformName>
+                                        <q1:ShaderName>TetrahedronLight</q1:ShaderName>
+                                      </Combinator>
+                                    </Expression>
+                                    <Expression xsi:type="SubscribeSubject">
+                                      <Name>Light</Name>
+                                    </Expression>
+                                    <Expression xsi:type="Combinator">
+                                      <Combinator xsi:type="q1:DrawShader">
+                                        <q1:ShaderName>TetrahedronLight</q1:ShaderName>
+                                        <q1:DrawMode>LineLoop</q1:DrawMode>
+                                      </Combinator>
+                                    </Expression>
+                                    <Expression xsi:type="Multiply" />
+                                    <Expression xsi:type="Sink">
+                                      <Name>SetWhite</Name>
+                                      <Workflow>
+                                        <Nodes>
+                                          <Expression xsi:type="WorkflowInput">
+                                            <Name>Source1</Name>
+                                          </Expression>
+                                          <Expression xsi:type="WorkflowOutput" />
+                                          <Expression xsi:type="q2:ExpressionTransform">
+                                            <q2:Expression>1.0f</q2:Expression>
+                                          </Expression>
+                                          <Expression xsi:type="MemberSelector">
+                                            <Selector>Source,Source,Source</Selector>
+                                          </Expression>
+                                          <Expression xsi:type="Combinator">
+                                            <Combinator xsi:type="q1:UpdateUniform">
+                                              <q1:UniformName>color</q1:UniformName>
+                                              <q1:ShaderName>TetrahedronLight</q1:ShaderName>
+                                            </Combinator>
+                                          </Expression>
+                                          <Expression xsi:type="ExternalizedPropertyOfStringUpdateUniform">
+                                            <MemberName>ShaderName</MemberName>
+                                            <Name>ShaderName</Name>
+                                            <Value>TetrahedronLight</Value>
+                                          </Expression>
+                                        </Nodes>
+                                        <Edges>
+                                          <Edge>
+                                            <From>0</From>
+                                            <To>2</To>
+                                            <Label>Source1</Label>
+                                          </Edge>
+                                          <Edge>
+                                            <From>2</From>
+                                            <To>3</To>
+                                            <Label>Source1</Label>
+                                          </Edge>
+                                          <Edge>
+                                            <From>3</From>
+                                            <To>4</To>
+                                            <Label>Source1</Label>
+                                          </Edge>
+                                          <Edge>
+                                            <From>4</From>
+                                            <To>1</To>
+                                            <Label>Source1</Label>
+                                          </Edge>
+                                          <Edge>
+                                            <From>5</From>
+                                            <To>4</To>
+                                            <Label>Source2</Label>
+                                          </Edge>
+                                        </Edges>
+                                      </Workflow>
+                                    </Expression>
+                                    <Expression xsi:type="MemberSelector">
+                                      <Selector>Source.Item1,Source.Item2.Item2</Selector>
+                                    </Expression>
+                                    <Expression xsi:type="Combinator">
+                                      <Combinator xsi:type="q1:DrawShader">
+                                        <q1:ShaderName>TetrahedronLight</q1:ShaderName>
+                                        <q1:DrawMode>Triangles</q1:DrawMode>
+                                      </Combinator>
+                                    </Expression>
+                                    <Expression xsi:type="Sink">
+                                      <Name>SetColor</Name>
+                                      <Workflow>
+                                        <Nodes>
+                                          <Expression xsi:type="WorkflowInput">
+                                            <Name>Source1</Name>
+                                          </Expression>
+                                          <Expression xsi:type="WorkflowOutput" />
+                                          <Expression xsi:type="Combinator">
+                                            <Combinator xsi:type="q1:UpdateUniform">
+                                              <q1:UniformName>color</q1:UniformName>
+                                              <q1:ShaderName>TetrahedronLight</q1:ShaderName>
+                                            </Combinator>
+                                          </Expression>
+                                          <Expression xsi:type="ExternalizedPropertyOfStringUpdateUniform">
+                                            <MemberName>ShaderName</MemberName>
+                                            <Name>ShaderName</Name>
+                                            <Value>TetrahedronLight</Value>
+                                          </Expression>
+                                          <Expression xsi:type="SubscribeSubject">
+                                            <Name>TunaData</Name>
+                                          </Expression>
+                                          <Expression xsi:type="MemberSelector">
+                                            <Selector>Source.Color</Selector>
+                                          </Expression>
+                                          <Expression xsi:type="Combinator">
+                                            <Combinator xsi:type="CombineLatest" />
+                                          </Expression>
+                                          <Expression xsi:type="Combinator">
+                                            <Combinator xsi:type="Sample" />
+                                          </Expression>
+                                          <Expression xsi:type="MemberSelector">
+                                            <Selector>Source.Item2</Selector>
+                                          </Expression>
+                                        </Nodes>
+                                        <Edges>
+                                          <Edge>
+                                            <From>0</From>
+                                            <To>6</To>
+                                            <Label>Source1</Label>
+                                          </Edge>
+                                          <Edge>
+                                            <From>0</From>
+                                            <To>7</To>
+                                            <Label>Source2</Label>
+                                          </Edge>
+                                          <Edge>
+                                            <From>2</From>
+                                            <To>1</To>
+                                            <Label>Source1</Label>
+                                          </Edge>
+                                          <Edge>
+                                            <From>3</From>
+                                            <To>2</To>
+                                            <Label>Source2</Label>
+                                          </Edge>
+                                          <Edge>
+                                            <From>4</From>
+                                            <To>5</To>
+                                            <Label>Source1</Label>
+                                          </Edge>
+                                          <Edge>
+                                            <From>5</From>
+                                            <To>6</To>
+                                            <Label>Source2</Label>
+                                          </Edge>
+                                          <Edge>
+                                            <From>6</From>
+                                            <To>7</To>
+                                            <Label>Source1</Label>
+                                          </Edge>
+                                          <Edge>
+                                            <From>7</From>
+                                            <To>8</To>
+                                            <Label>Source1</Label>
+                                          </Edge>
+                                          <Edge>
+                                            <From>8</From>
+                                            <To>2</To>
+                                            <Label>Source1</Label>
+                                          </Edge>
+                                        </Edges>
+                                      </Workflow>
+                                    </Expression>
+                                    <Expression xsi:type="Combinator">
+                                      <Combinator xsi:type="q1:UpdateUniform">
+                                        <q1:UniformName>mvp</q1:UniformName>
+                                        <q1:ShaderName>TetrahedronLight</q1:ShaderName>
+                                      </Combinator>
+                                    </Expression>
+                                    <Expression xsi:type="Multiply" />
+                                    <Expression xsi:type="ExternalizedPropertyOfStringUpdateUniform">
+                                      <MemberName>ShaderName</MemberName>
+                                      <Name>ShaderName</Name>
+                                      <Value>DodecahedronLight</Value>
+                                    </Expression>
+                                    <Expression xsi:type="MemberSelector">
+                                      <Selector>Source.Item1,Source.Item2.Item1</Selector>
+                                    </Expression>
+                                    <Expression xsi:type="Combinator">
+                                      <Combinator xsi:type="q1:SampleOnUpdateFrame" />
+                                    </Expression>
+                                    <Expression xsi:type="Combinator">
+                                      <Combinator xsi:type="CombineLatest" />
+                                    </Expression>
+                                    <Expression xsi:type="WorkflowInput">
+                                      <Name>Source1</Name>
+                                    </Expression>
+                                    <Expression xsi:type="Combinator">
+                                      <Combinator xsi:type="Zip" />
+                                    </Expression>
+                                    <Expression xsi:type="SubscribeSubject">
+                                      <Name>ViewProjection</Name>
+                                    </Expression>
+                                    <Expression xsi:type="SubscribeSubject">
+                                      <Name>ViewMatrix</Name>
+                                    </Expression>
+                                  </Nodes>
+                                  <Edges>
+                                    <Edge>
+                                      <From>3</From>
+                                      <To>0</To>
+                                      <Label>Source1</Label>
+                                    </Edge>
+                                    <Edge>
+                                      <From>4</From>
+                                      <To>1</To>
+                                      <Label>Source1</Label>
+                                    </Edge>
+                                    <Edge>
+                                      <From>5</From>
+                                      <To>2</To>
+                                      <Label>Source1</Label>
+                                    </Edge>
+                                    <Edge>
+                                      <From>6</From>
+                                      <To>4</To>
+                                      <Label>Source1</Label>
+                                    </Edge>
+                                    <Edge>
+                                      <From>7</From>
+                                      <To>5</To>
+                                      <Label>Source1</Label>
+                                    </Edge>
+                                    <Edge>
+                                      <From>8</From>
+                                      <To>6</To>
+                                      <Label>Source1</Label>
+                                    </Edge>
+                                    <Edge>
+                                      <From>9</From>
+                                      <To>8</To>
+                                      <Label>Source1</Label>
+                                    </Edge>
+                                    <Edge>
+                                      <From>10</From>
+                                      <To>9</To>
+                                      <Label>Source1</Label>
+                                    </Edge>
+                                    <Edge>
+                                      <From>11</From>
+                                      <To>10</To>
+                                      <Label>Source1</Label>
+                                    </Edge>
+                                    <Edge>
+                                      <From>12</From>
+                                      <To>10</To>
+                                      <Label>Source2</Label>
+                                    </Edge>
+                                    <Edge>
+                                      <From>12</From>
+                                      <To>8</To>
+                                      <Label>Source2</Label>
+                                    </Edge>
+                                    <Edge>
+                                      <From>12</From>
+                                      <To>4</To>
+                                      <Label>Source2</Label>
+                                    </Edge>
+                                    <Edge>
+                                      <From>12</From>
+                                      <To>9</To>
+                                      <Label>Source2</Label>
+                                    </Edge>
+                                    <Edge>
+                                      <From>12</From>
+                                      <To>6</To>
+                                      <Label>Source2</Label>
+                                    </Edge>
+                                    <Edge>
+                                      <From>12</From>
+                                      <To>2</To>
+                                      <Label>Source2</Label>
+                                    </Edge>
+                                    <Edge>
+                                      <From>12</From>
+                                      <To>0</To>
+                                      <Label>Source2</Label>
+                                    </Edge>
+                                    <Edge>
+                                      <From>13</From>
+                                      <To>11</To>
+                                      <Label>Source1</Label>
+                                    </Edge>
+                                    <Edge>
+                                      <From>14</From>
+                                      <To>13</To>
+                                      <Label>Source1</Label>
+                                    </Edge>
+                                    <Edge>
+                                      <From>14</From>
+                                      <To>7</To>
+                                      <Label>Source1</Label>
+                                    </Edge>
+                                    <Edge>
+                                      <From>15</From>
+                                      <To>14</To>
+                                      <Label>Source1</Label>
+                                    </Edge>
+                                    <Edge>
+                                      <From>16</From>
+                                      <To>15</To>
+                                      <Label>Source1</Label>
+                                    </Edge>
+                                    <Edge>
+                                      <From>17</From>
+                                      <To>15</To>
+                                      <Label>Source2</Label>
+                                    </Edge>
+                                    <Edge>
+                                      <From>18</From>
+                                      <To>17</To>
+                                      <Label>Source1</Label>
+                                    </Edge>
+                                    <Edge>
+                                      <From>19</From>
+                                      <To>17</To>
+                                      <Label>Source2</Label>
+                                    </Edge>
+                                  </Edges>
+                                </Workflow>
+                              </Expression>
+                              <Expression xsi:type="MemberSelector">
+                                <Selector>Source.Item1</Selector>
+                              </Expression>
+                              <Expression xsi:type="Condition">
+                                <Workflow>
+                                  <Nodes>
+                                    <Expression xsi:type="WorkflowInput">
+                                      <Name>Source1</Name>
+                                    </Expression>
+                                    <Expression xsi:type="WorkflowOutput" />
+                                    <Expression xsi:type="Equal">
+                                      <Operand xsi:type="IntProperty">
+                                        <Value>4</Value>
+                                      </Operand>
+                                    </Expression>
+                                    <Expression xsi:type="MemberSelector">
+                                      <Selector>Source.Item2</Selector>
+                                    </Expression>
+                                  </Nodes>
+                                  <Edges>
+                                    <Edge>
+                                      <From>0</From>
+                                      <To>3</To>
+                                      <Label>Source1</Label>
+                                    </Edge>
+                                    <Edge>
+                                      <From>2</From>
+                                      <To>1</To>
+                                      <Label>Source1</Label>
+                                    </Edge>
+                                    <Edge>
+                                      <From>3</From>
+                                      <To>2</To>
+                                      <Label>Source1</Label>
+                                    </Edge>
+                                  </Edges>
+                                </Workflow>
+                              </Expression>
                             </Nodes>
                             <Edges>
                               <Edge>
@@ -1436,8 +2549,53 @@ Item5 as Id
                                 <Label>Source1</Label>
                               </Edge>
                               <Edge>
+                                <From>5</From>
+                                <To>11</To>
+                                <Label>Source1</Label>
+                              </Edge>
+                              <Edge>
+                                <From>5</From>
+                                <To>14</To>
+                                <Label>Source1</Label>
+                              </Edge>
+                              <Edge>
+                                <From>5</From>
+                                <To>17</To>
+                                <Label>Source1</Label>
+                              </Edge>
+                              <Edge>
                                 <From>7</From>
                                 <To>0</To>
+                                <Label>Source1</Label>
+                              </Edge>
+                              <Edge>
+                                <From>10</From>
+                                <To>9</To>
+                                <Label>Source1</Label>
+                              </Edge>
+                              <Edge>
+                                <From>11</From>
+                                <To>10</To>
+                                <Label>Source1</Label>
+                              </Edge>
+                              <Edge>
+                                <From>13</From>
+                                <To>12</To>
+                                <Label>Source1</Label>
+                              </Edge>
+                              <Edge>
+                                <From>14</From>
+                                <To>13</To>
+                                <Label>Source1</Label>
+                              </Edge>
+                              <Edge>
+                                <From>16</From>
+                                <To>15</To>
+                                <Label>Source1</Label>
+                              </Edge>
+                              <Edge>
+                                <From>17</From>
+                                <To>16</To>
                                 <Label>Source1</Label>
                               </Edge>
                             </Edges>
@@ -1455,9 +2613,9 @@ Item5 as Id
                         </Expression>
                         <Expression xsi:type="Combinator">
                           <Combinator xsi:type="q1:CreateTranslation">
-                            <q1:X>-0.6087506</q1:X>
-                            <q1:Y>0.9637499</q1:Y>
-                            <q1:Z>0.350000262</q1:Z>
+                            <q1:X>21.0124989</q1:X>
+                            <q1:Y>0.208750367</q1:Y>
+                            <q1:Z>-37.0225</q1:Z>
                           </Combinator>
                         </Expression>
                         <Expression xsi:type="SubscribeSubject">
@@ -1553,9 +2711,10 @@ Item5 as Id
                           <Combinator xsi:type="Zip" />
                         </Expression>
                         <Expression xsi:type="Multiply" />
+                        <Expression xsi:type="MemberSelector" />
                         <Expression xsi:type="Combinator">
                           <Combinator xsi:type="Buffer">
-                            <Count>100</Count>
+                            <Count>150</Count>
                             <Skip>1</Skip>
                           </Combinator>
                         </Expression>
@@ -1587,17 +2746,17 @@ Item5 as Id
                               </Expression>
                               <Expression xsi:type="Combinator">
                                 <Combinator xsi:type="q1:CreateRotationY">
-                                  <q1:Angle>0.07637668</q1:Angle>
+                                  <q1:Angle>1.91628933E-05</q1:Angle>
                                 </Combinator>
                               </Expression>
                               <Expression xsi:type="Combinator">
                                 <Combinator xsi:type="q1:CreateRotationX">
-                                  <q1:Angle>0.02885666</q1:Angle>
+                                  <q1:Angle>-3.33189973E-06</q1:Angle>
                                 </Combinator>
                               </Expression>
                               <Expression xsi:type="Combinator">
                                 <Combinator xsi:type="q1:CreateRotationZ">
-                                  <q1:Angle>0.06453667</q1:Angle>
+                                  <q1:Angle>8.34465E-07</q1:Angle>
                                 </Combinator>
                               </Expression>
                               <Expression xsi:type="Combinator">
@@ -1689,9 +2848,9 @@ Item5 as Id
                         </Expression>
                         <Expression xsi:type="Combinator">
                           <Combinator xsi:type="q1:CreateScale">
-                            <q1:X>2.86070824</q1:X>
-                            <q1:Y>3.45470858</q1:Y>
-                            <q1:Z>3.30670834</q1:Z>
+                            <q1:X>2.49983335</q1:X>
+                            <q1:Y>2.5009582</q1:Y>
+                            <q1:Z>2.50004172</q1:Z>
                           </Combinator>
                         </Expression>
                         <Expression xsi:type="MemberSelector">
@@ -1706,7 +2865,7 @@ Item5 as Id
                         </Expression>
                         <Expression xsi:type="Mod">
                           <Operand xsi:type="IntProperty">
-                            <Value>2</Value>
+                            <Value>5</Value>
                           </Operand>
                         </Expression>
                         <Expression xsi:type="Sink">
@@ -2322,6 +3481,906 @@ Item5 as Id
                                   </Edges>
                                 </Workflow>
                               </Expression>
+                              <Expression xsi:type="Sink">
+                                <Name>DrawTetrahedronTrail</Name>
+                                <Workflow>
+                                  <Nodes>
+                                    <Expression xsi:type="Combinator">
+                                      <Combinator xsi:type="CombineLatest" />
+                                    </Expression>
+                                    <Expression xsi:type="Combinator">
+                                      <Combinator xsi:type="q1:CreateScale">
+                                        <q1:X>0.4</q1:X>
+                                        <q1:Y>0.4</q1:Y>
+                                        <q1:Z>0.4</q1:Z>
+                                      </Combinator>
+                                    </Expression>
+                                    <Expression xsi:type="Combinator">
+                                      <Combinator xsi:type="q1:DrawShader">
+                                        <q1:ShaderName>TetrahedronLight</q1:ShaderName>
+                                        <q1:DrawMode>Triangles</q1:DrawMode>
+                                      </Combinator>
+                                    </Expression>
+                                    <Expression xsi:type="Sink">
+                                      <Name>SetColor</Name>
+                                      <Workflow>
+                                        <Nodes>
+                                          <Expression xsi:type="WorkflowInput">
+                                            <Name>Source1</Name>
+                                          </Expression>
+                                          <Expression xsi:type="WorkflowOutput" />
+                                          <Expression xsi:type="Combinator">
+                                            <Combinator xsi:type="q1:UpdateUniform">
+                                              <q1:UniformName>color</q1:UniformName>
+                                              <q1:ShaderName>TetrahedronLight</q1:ShaderName>
+                                            </Combinator>
+                                          </Expression>
+                                          <Expression xsi:type="ExternalizedPropertyOfStringUpdateUniform">
+                                            <MemberName>ShaderName</MemberName>
+                                            <Name>ShaderName</Name>
+                                            <Value>TetrahedronLight</Value>
+                                          </Expression>
+                                          <Expression xsi:type="Combinator">
+                                            <Combinator xsi:type="CombineLatest" />
+                                          </Expression>
+                                          <Expression xsi:type="Combinator">
+                                            <Combinator xsi:type="Sample" />
+                                          </Expression>
+                                          <Expression xsi:type="MemberSelector">
+                                            <Selector>Source.Item2</Selector>
+                                          </Expression>
+                                          <Expression xsi:type="SubscribeSubject">
+                                            <Name>Color</Name>
+                                          </Expression>
+                                        </Nodes>
+                                        <Edges>
+                                          <Edge>
+                                            <From>0</From>
+                                            <To>4</To>
+                                            <Label>Source1</Label>
+                                          </Edge>
+                                          <Edge>
+                                            <From>0</From>
+                                            <To>5</To>
+                                            <Label>Source2</Label>
+                                          </Edge>
+                                          <Edge>
+                                            <From>2</From>
+                                            <To>1</To>
+                                            <Label>Source1</Label>
+                                          </Edge>
+                                          <Edge>
+                                            <From>3</From>
+                                            <To>2</To>
+                                            <Label>Source2</Label>
+                                          </Edge>
+                                          <Edge>
+                                            <From>4</From>
+                                            <To>5</To>
+                                            <Label>Source1</Label>
+                                          </Edge>
+                                          <Edge>
+                                            <From>5</From>
+                                            <To>6</To>
+                                            <Label>Source1</Label>
+                                          </Edge>
+                                          <Edge>
+                                            <From>6</From>
+                                            <To>2</To>
+                                            <Label>Source1</Label>
+                                          </Edge>
+                                          <Edge>
+                                            <From>7</From>
+                                            <To>4</To>
+                                            <Label>Source2</Label>
+                                          </Edge>
+                                        </Edges>
+                                      </Workflow>
+                                    </Expression>
+                                    <Expression xsi:type="Combinator">
+                                      <Combinator xsi:type="q1:UpdateUniform">
+                                        <q1:UniformName>mvp</q1:UniformName>
+                                        <q1:ShaderName>TetrahedronLight</q1:ShaderName>
+                                      </Combinator>
+                                    </Expression>
+                                    <Expression xsi:type="Multiply" />
+                                    <Expression xsi:type="MemberSelector">
+                                      <Selector>Source.Item1,Source.Item2.Item1</Selector>
+                                    </Expression>
+                                    <Expression xsi:type="Combinator">
+                                      <Combinator xsi:type="CombineLatest" />
+                                    </Expression>
+                                    <Expression xsi:type="ExternalizedPropertyOfStringUpdateUniform">
+                                      <MemberName>ShaderName</MemberName>
+                                      <Name>ShaderName</Name>
+                                      <Value>TetrahedronLight</Value>
+                                    </Expression>
+                                    <Expression xsi:type="SubscribeSubject">
+                                      <Name>ViewProjection</Name>
+                                    </Expression>
+                                    <Expression xsi:type="WorkflowInput">
+                                      <Name>Source1</Name>
+                                    </Expression>
+                                    <Expression xsi:type="WorkflowOutput" />
+                                    <Expression xsi:type="SubscribeSubject">
+                                      <Name>ViewMatrix</Name>
+                                    </Expression>
+                                    <Expression xsi:type="Combinator">
+                                      <Combinator xsi:type="Zip" />
+                                    </Expression>
+                                    <Expression xsi:type="MemberSelector">
+                                      <Selector>Source.Item1,Source.Item2.Item2</Selector>
+                                    </Expression>
+                                    <Expression xsi:type="Multiply" />
+                                    <Expression xsi:type="Combinator">
+                                      <Combinator xsi:type="q1:UpdateUniform">
+                                        <q1:UniformName>mv</q1:UniformName>
+                                        <q1:ShaderName>TetrahedronLight</q1:ShaderName>
+                                      </Combinator>
+                                    </Expression>
+                                    <Expression xsi:type="SubscribeSubject">
+                                      <Name>Light</Name>
+                                    </Expression>
+                                    <Expression xsi:type="Combinator">
+                                      <Combinator xsi:type="q1:UpdateUniform">
+                                        <q1:UniformName>lightposition</q1:UniformName>
+                                        <q1:ShaderName>TetrahedronLight</q1:ShaderName>
+                                      </Combinator>
+                                    </Expression>
+                                    <Expression xsi:type="Multiply" />
+                                  </Nodes>
+                                  <Edges>
+                                    <Edge>
+                                      <From>0</From>
+                                      <To>19</To>
+                                      <Label>Source1</Label>
+                                    </Edge>
+                                    <Edge>
+                                      <From>1</From>
+                                      <To>0</To>
+                                      <Label>Source1</Label>
+                                    </Edge>
+                                    <Edge>
+                                      <From>2</From>
+                                      <To>11</To>
+                                      <Label>Source1</Label>
+                                    </Edge>
+                                    <Edge>
+                                      <From>3</From>
+                                      <To>2</To>
+                                      <Label>Source1</Label>
+                                    </Edge>
+                                    <Edge>
+                                      <From>4</From>
+                                      <To>3</To>
+                                      <Label>Source1</Label>
+                                    </Edge>
+                                    <Edge>
+                                      <From>5</From>
+                                      <To>4</To>
+                                      <Label>Source1</Label>
+                                    </Edge>
+                                    <Edge>
+                                      <From>6</From>
+                                      <To>5</To>
+                                      <Label>Source1</Label>
+                                    </Edge>
+                                    <Edge>
+                                      <From>7</From>
+                                      <To>6</To>
+                                      <Label>Source1</Label>
+                                    </Edge>
+                                    <Edge>
+                                      <From>7</From>
+                                      <To>14</To>
+                                      <Label>Source1</Label>
+                                    </Edge>
+                                    <Edge>
+                                      <From>8</From>
+                                      <To>4</To>
+                                      <Label>Source2</Label>
+                                    </Edge>
+                                    <Edge>
+                                      <From>8</From>
+                                      <To>2</To>
+                                      <Label>Source2</Label>
+                                    </Edge>
+                                    <Edge>
+                                      <From>8</From>
+                                      <To>3</To>
+                                      <Label>Source2</Label>
+                                    </Edge>
+                                    <Edge>
+                                      <From>8</From>
+                                      <To>16</To>
+                                      <Label>Source2</Label>
+                                    </Edge>
+                                    <Edge>
+                                      <From>8</From>
+                                      <To>18</To>
+                                      <Label>Source2</Label>
+                                    </Edge>
+                                    <Edge>
+                                      <From>9</From>
+                                      <To>13</To>
+                                      <Label>Source1</Label>
+                                    </Edge>
+                                    <Edge>
+                                      <From>10</From>
+                                      <To>0</To>
+                                      <Label>Source2</Label>
+                                    </Edge>
+                                    <Edge>
+                                      <From>12</From>
+                                      <To>13</To>
+                                      <Label>Source2</Label>
+                                    </Edge>
+                                    <Edge>
+                                      <From>13</From>
+                                      <To>7</To>
+                                      <Label>Source2</Label>
+                                    </Edge>
+                                    <Edge>
+                                      <From>14</From>
+                                      <To>15</To>
+                                      <Label>Source1</Label>
+                                    </Edge>
+                                    <Edge>
+                                      <From>15</From>
+                                      <To>16</To>
+                                      <Label>Source1</Label>
+                                    </Edge>
+                                    <Edge>
+                                      <From>17</From>
+                                      <To>18</To>
+                                      <Label>Source1</Label>
+                                    </Edge>
+                                    <Edge>
+                                      <From>19</From>
+                                      <To>7</To>
+                                      <Label>Source1</Label>
+                                    </Edge>
+                                  </Edges>
+                                </Workflow>
+                              </Expression>
+                              <Expression xsi:type="MemberSelector">
+                                <Selector>Source.Item1</Selector>
+                              </Expression>
+                              <Expression xsi:type="Condition">
+                                <Workflow>
+                                  <Nodes>
+                                    <Expression xsi:type="WorkflowInput">
+                                      <Name>Source1</Name>
+                                    </Expression>
+                                    <Expression xsi:type="WorkflowOutput" />
+                                    <Expression xsi:type="MemberSelector">
+                                      <Selector>Source.Item2</Selector>
+                                    </Expression>
+                                    <Expression xsi:type="Equal">
+                                      <Operand xsi:type="IntProperty">
+                                        <Value>2</Value>
+                                      </Operand>
+                                    </Expression>
+                                  </Nodes>
+                                  <Edges>
+                                    <Edge>
+                                      <From>0</From>
+                                      <To>2</To>
+                                      <Label>Source1</Label>
+                                    </Edge>
+                                    <Edge>
+                                      <From>2</From>
+                                      <To>3</To>
+                                      <Label>Source1</Label>
+                                    </Edge>
+                                    <Edge>
+                                      <From>3</From>
+                                      <To>1</To>
+                                      <Label>Source1</Label>
+                                    </Edge>
+                                  </Edges>
+                                </Workflow>
+                              </Expression>
+                              <Expression xsi:type="Sink">
+                                <Name>DrawOctahedronTrail</Name>
+                                <Workflow>
+                                  <Nodes>
+                                    <Expression xsi:type="Combinator">
+                                      <Combinator xsi:type="CombineLatest" />
+                                    </Expression>
+                                    <Expression xsi:type="Combinator">
+                                      <Combinator xsi:type="q1:CreateScale">
+                                        <q1:X>0.4</q1:X>
+                                        <q1:Y>0.4</q1:Y>
+                                        <q1:Z>0.4</q1:Z>
+                                      </Combinator>
+                                    </Expression>
+                                    <Expression xsi:type="Combinator">
+                                      <Combinator xsi:type="q1:DrawShader">
+                                        <q1:ShaderName>TetrahedronLight</q1:ShaderName>
+                                        <q1:DrawMode>Triangles</q1:DrawMode>
+                                      </Combinator>
+                                    </Expression>
+                                    <Expression xsi:type="Sink">
+                                      <Name>SetColor</Name>
+                                      <Workflow>
+                                        <Nodes>
+                                          <Expression xsi:type="WorkflowInput">
+                                            <Name>Source1</Name>
+                                          </Expression>
+                                          <Expression xsi:type="WorkflowOutput" />
+                                          <Expression xsi:type="Combinator">
+                                            <Combinator xsi:type="q1:UpdateUniform">
+                                              <q1:UniformName>color</q1:UniformName>
+                                              <q1:ShaderName>TetrahedronLight</q1:ShaderName>
+                                            </Combinator>
+                                          </Expression>
+                                          <Expression xsi:type="ExternalizedPropertyOfStringUpdateUniform">
+                                            <MemberName>ShaderName</MemberName>
+                                            <Name>ShaderName</Name>
+                                            <Value>TetrahedronLight</Value>
+                                          </Expression>
+                                          <Expression xsi:type="Combinator">
+                                            <Combinator xsi:type="CombineLatest" />
+                                          </Expression>
+                                          <Expression xsi:type="Combinator">
+                                            <Combinator xsi:type="Sample" />
+                                          </Expression>
+                                          <Expression xsi:type="MemberSelector">
+                                            <Selector>Source.Item2</Selector>
+                                          </Expression>
+                                          <Expression xsi:type="SubscribeSubject">
+                                            <Name>Color</Name>
+                                          </Expression>
+                                        </Nodes>
+                                        <Edges>
+                                          <Edge>
+                                            <From>0</From>
+                                            <To>4</To>
+                                            <Label>Source1</Label>
+                                          </Edge>
+                                          <Edge>
+                                            <From>0</From>
+                                            <To>5</To>
+                                            <Label>Source2</Label>
+                                          </Edge>
+                                          <Edge>
+                                            <From>2</From>
+                                            <To>1</To>
+                                            <Label>Source1</Label>
+                                          </Edge>
+                                          <Edge>
+                                            <From>3</From>
+                                            <To>2</To>
+                                            <Label>Source2</Label>
+                                          </Edge>
+                                          <Edge>
+                                            <From>4</From>
+                                            <To>5</To>
+                                            <Label>Source1</Label>
+                                          </Edge>
+                                          <Edge>
+                                            <From>5</From>
+                                            <To>6</To>
+                                            <Label>Source1</Label>
+                                          </Edge>
+                                          <Edge>
+                                            <From>6</From>
+                                            <To>2</To>
+                                            <Label>Source1</Label>
+                                          </Edge>
+                                          <Edge>
+                                            <From>7</From>
+                                            <To>4</To>
+                                            <Label>Source2</Label>
+                                          </Edge>
+                                        </Edges>
+                                      </Workflow>
+                                    </Expression>
+                                    <Expression xsi:type="Combinator">
+                                      <Combinator xsi:type="q1:UpdateUniform">
+                                        <q1:UniformName>mvp</q1:UniformName>
+                                        <q1:ShaderName>TetrahedronLight</q1:ShaderName>
+                                      </Combinator>
+                                    </Expression>
+                                    <Expression xsi:type="Multiply" />
+                                    <Expression xsi:type="MemberSelector">
+                                      <Selector>Source.Item1,Source.Item2.Item1</Selector>
+                                    </Expression>
+                                    <Expression xsi:type="Combinator">
+                                      <Combinator xsi:type="CombineLatest" />
+                                    </Expression>
+                                    <Expression xsi:type="ExternalizedPropertyOfStringUpdateUniform">
+                                      <MemberName>ShaderName</MemberName>
+                                      <Name>ShaderName</Name>
+                                      <Value>OctahedronLight</Value>
+                                    </Expression>
+                                    <Expression xsi:type="SubscribeSubject">
+                                      <Name>ViewProjection</Name>
+                                    </Expression>
+                                    <Expression xsi:type="WorkflowInput">
+                                      <Name>Source1</Name>
+                                    </Expression>
+                                    <Expression xsi:type="WorkflowOutput" />
+                                    <Expression xsi:type="SubscribeSubject">
+                                      <Name>ViewMatrix</Name>
+                                    </Expression>
+                                    <Expression xsi:type="Combinator">
+                                      <Combinator xsi:type="Zip" />
+                                    </Expression>
+                                    <Expression xsi:type="MemberSelector">
+                                      <Selector>Source.Item1,Source.Item2.Item2</Selector>
+                                    </Expression>
+                                    <Expression xsi:type="Multiply" />
+                                    <Expression xsi:type="Combinator">
+                                      <Combinator xsi:type="q1:UpdateUniform">
+                                        <q1:UniformName>mv</q1:UniformName>
+                                        <q1:ShaderName>TetrahedronLight</q1:ShaderName>
+                                      </Combinator>
+                                    </Expression>
+                                    <Expression xsi:type="SubscribeSubject">
+                                      <Name>Light</Name>
+                                    </Expression>
+                                    <Expression xsi:type="Combinator">
+                                      <Combinator xsi:type="q1:UpdateUniform">
+                                        <q1:UniformName>lightposition</q1:UniformName>
+                                        <q1:ShaderName>TetrahedronLight</q1:ShaderName>
+                                      </Combinator>
+                                    </Expression>
+                                    <Expression xsi:type="Multiply" />
+                                  </Nodes>
+                                  <Edges>
+                                    <Edge>
+                                      <From>0</From>
+                                      <To>19</To>
+                                      <Label>Source1</Label>
+                                    </Edge>
+                                    <Edge>
+                                      <From>1</From>
+                                      <To>0</To>
+                                      <Label>Source1</Label>
+                                    </Edge>
+                                    <Edge>
+                                      <From>2</From>
+                                      <To>11</To>
+                                      <Label>Source1</Label>
+                                    </Edge>
+                                    <Edge>
+                                      <From>3</From>
+                                      <To>2</To>
+                                      <Label>Source1</Label>
+                                    </Edge>
+                                    <Edge>
+                                      <From>4</From>
+                                      <To>3</To>
+                                      <Label>Source1</Label>
+                                    </Edge>
+                                    <Edge>
+                                      <From>5</From>
+                                      <To>4</To>
+                                      <Label>Source1</Label>
+                                    </Edge>
+                                    <Edge>
+                                      <From>6</From>
+                                      <To>5</To>
+                                      <Label>Source1</Label>
+                                    </Edge>
+                                    <Edge>
+                                      <From>7</From>
+                                      <To>6</To>
+                                      <Label>Source1</Label>
+                                    </Edge>
+                                    <Edge>
+                                      <From>7</From>
+                                      <To>14</To>
+                                      <Label>Source1</Label>
+                                    </Edge>
+                                    <Edge>
+                                      <From>8</From>
+                                      <To>4</To>
+                                      <Label>Source2</Label>
+                                    </Edge>
+                                    <Edge>
+                                      <From>8</From>
+                                      <To>2</To>
+                                      <Label>Source2</Label>
+                                    </Edge>
+                                    <Edge>
+                                      <From>8</From>
+                                      <To>3</To>
+                                      <Label>Source2</Label>
+                                    </Edge>
+                                    <Edge>
+                                      <From>8</From>
+                                      <To>16</To>
+                                      <Label>Source2</Label>
+                                    </Edge>
+                                    <Edge>
+                                      <From>8</From>
+                                      <To>18</To>
+                                      <Label>Source2</Label>
+                                    </Edge>
+                                    <Edge>
+                                      <From>9</From>
+                                      <To>13</To>
+                                      <Label>Source1</Label>
+                                    </Edge>
+                                    <Edge>
+                                      <From>10</From>
+                                      <To>0</To>
+                                      <Label>Source2</Label>
+                                    </Edge>
+                                    <Edge>
+                                      <From>12</From>
+                                      <To>13</To>
+                                      <Label>Source2</Label>
+                                    </Edge>
+                                    <Edge>
+                                      <From>13</From>
+                                      <To>7</To>
+                                      <Label>Source2</Label>
+                                    </Edge>
+                                    <Edge>
+                                      <From>14</From>
+                                      <To>15</To>
+                                      <Label>Source1</Label>
+                                    </Edge>
+                                    <Edge>
+                                      <From>15</From>
+                                      <To>16</To>
+                                      <Label>Source1</Label>
+                                    </Edge>
+                                    <Edge>
+                                      <From>17</From>
+                                      <To>18</To>
+                                      <Label>Source1</Label>
+                                    </Edge>
+                                    <Edge>
+                                      <From>19</From>
+                                      <To>7</To>
+                                      <Label>Source1</Label>
+                                    </Edge>
+                                  </Edges>
+                                </Workflow>
+                              </Expression>
+                              <Expression xsi:type="MemberSelector">
+                                <Selector>Source.Item1</Selector>
+                              </Expression>
+                              <Expression xsi:type="Condition">
+                                <Workflow>
+                                  <Nodes>
+                                    <Expression xsi:type="WorkflowInput">
+                                      <Name>Source1</Name>
+                                    </Expression>
+                                    <Expression xsi:type="WorkflowOutput" />
+                                    <Expression xsi:type="MemberSelector">
+                                      <Selector>Source.Item2</Selector>
+                                    </Expression>
+                                    <Expression xsi:type="Equal">
+                                      <Operand xsi:type="IntProperty">
+                                        <Value>3</Value>
+                                      </Operand>
+                                    </Expression>
+                                  </Nodes>
+                                  <Edges>
+                                    <Edge>
+                                      <From>0</From>
+                                      <To>2</To>
+                                      <Label>Source1</Label>
+                                    </Edge>
+                                    <Edge>
+                                      <From>2</From>
+                                      <To>3</To>
+                                      <Label>Source1</Label>
+                                    </Edge>
+                                    <Edge>
+                                      <From>3</From>
+                                      <To>1</To>
+                                      <Label>Source1</Label>
+                                    </Edge>
+                                  </Edges>
+                                </Workflow>
+                              </Expression>
+                              <Expression xsi:type="Sink">
+                                <Name>DrawDodecahedronTrail</Name>
+                                <Workflow>
+                                  <Nodes>
+                                    <Expression xsi:type="Combinator">
+                                      <Combinator xsi:type="CombineLatest" />
+                                    </Expression>
+                                    <Expression xsi:type="Combinator">
+                                      <Combinator xsi:type="q1:CreateScale">
+                                        <q1:X>0.4</q1:X>
+                                        <q1:Y>0.4</q1:Y>
+                                        <q1:Z>0.4</q1:Z>
+                                      </Combinator>
+                                    </Expression>
+                                    <Expression xsi:type="Combinator">
+                                      <Combinator xsi:type="q1:DrawShader">
+                                        <q1:ShaderName>TetrahedronLight</q1:ShaderName>
+                                        <q1:DrawMode>Triangles</q1:DrawMode>
+                                      </Combinator>
+                                    </Expression>
+                                    <Expression xsi:type="Sink">
+                                      <Name>SetColor</Name>
+                                      <Workflow>
+                                        <Nodes>
+                                          <Expression xsi:type="WorkflowInput">
+                                            <Name>Source1</Name>
+                                          </Expression>
+                                          <Expression xsi:type="WorkflowOutput" />
+                                          <Expression xsi:type="Combinator">
+                                            <Combinator xsi:type="q1:UpdateUniform">
+                                              <q1:UniformName>color</q1:UniformName>
+                                              <q1:ShaderName>TetrahedronLight</q1:ShaderName>
+                                            </Combinator>
+                                          </Expression>
+                                          <Expression xsi:type="ExternalizedPropertyOfStringUpdateUniform">
+                                            <MemberName>ShaderName</MemberName>
+                                            <Name>ShaderName</Name>
+                                            <Value>TetrahedronLight</Value>
+                                          </Expression>
+                                          <Expression xsi:type="Combinator">
+                                            <Combinator xsi:type="CombineLatest" />
+                                          </Expression>
+                                          <Expression xsi:type="Combinator">
+                                            <Combinator xsi:type="Sample" />
+                                          </Expression>
+                                          <Expression xsi:type="MemberSelector">
+                                            <Selector>Source.Item2</Selector>
+                                          </Expression>
+                                          <Expression xsi:type="SubscribeSubject">
+                                            <Name>Color</Name>
+                                          </Expression>
+                                        </Nodes>
+                                        <Edges>
+                                          <Edge>
+                                            <From>0</From>
+                                            <To>4</To>
+                                            <Label>Source1</Label>
+                                          </Edge>
+                                          <Edge>
+                                            <From>0</From>
+                                            <To>5</To>
+                                            <Label>Source2</Label>
+                                          </Edge>
+                                          <Edge>
+                                            <From>2</From>
+                                            <To>1</To>
+                                            <Label>Source1</Label>
+                                          </Edge>
+                                          <Edge>
+                                            <From>3</From>
+                                            <To>2</To>
+                                            <Label>Source2</Label>
+                                          </Edge>
+                                          <Edge>
+                                            <From>4</From>
+                                            <To>5</To>
+                                            <Label>Source1</Label>
+                                          </Edge>
+                                          <Edge>
+                                            <From>5</From>
+                                            <To>6</To>
+                                            <Label>Source1</Label>
+                                          </Edge>
+                                          <Edge>
+                                            <From>6</From>
+                                            <To>2</To>
+                                            <Label>Source1</Label>
+                                          </Edge>
+                                          <Edge>
+                                            <From>7</From>
+                                            <To>4</To>
+                                            <Label>Source2</Label>
+                                          </Edge>
+                                        </Edges>
+                                      </Workflow>
+                                    </Expression>
+                                    <Expression xsi:type="Combinator">
+                                      <Combinator xsi:type="q1:UpdateUniform">
+                                        <q1:UniformName>mvp</q1:UniformName>
+                                        <q1:ShaderName>TetrahedronLight</q1:ShaderName>
+                                      </Combinator>
+                                    </Expression>
+                                    <Expression xsi:type="Multiply" />
+                                    <Expression xsi:type="MemberSelector">
+                                      <Selector>Source.Item1,Source.Item2.Item1</Selector>
+                                    </Expression>
+                                    <Expression xsi:type="Combinator">
+                                      <Combinator xsi:type="CombineLatest" />
+                                    </Expression>
+                                    <Expression xsi:type="ExternalizedPropertyOfStringUpdateUniform">
+                                      <MemberName>ShaderName</MemberName>
+                                      <Name>ShaderName</Name>
+                                      <Value>DodecahedronLight</Value>
+                                    </Expression>
+                                    <Expression xsi:type="SubscribeSubject">
+                                      <Name>ViewProjection</Name>
+                                    </Expression>
+                                    <Expression xsi:type="WorkflowInput">
+                                      <Name>Source1</Name>
+                                    </Expression>
+                                    <Expression xsi:type="WorkflowOutput" />
+                                    <Expression xsi:type="SubscribeSubject">
+                                      <Name>ViewMatrix</Name>
+                                    </Expression>
+                                    <Expression xsi:type="Combinator">
+                                      <Combinator xsi:type="Zip" />
+                                    </Expression>
+                                    <Expression xsi:type="MemberSelector">
+                                      <Selector>Source.Item1,Source.Item2.Item2</Selector>
+                                    </Expression>
+                                    <Expression xsi:type="Multiply" />
+                                    <Expression xsi:type="Combinator">
+                                      <Combinator xsi:type="q1:UpdateUniform">
+                                        <q1:UniformName>mv</q1:UniformName>
+                                        <q1:ShaderName>TetrahedronLight</q1:ShaderName>
+                                      </Combinator>
+                                    </Expression>
+                                    <Expression xsi:type="SubscribeSubject">
+                                      <Name>Light</Name>
+                                    </Expression>
+                                    <Expression xsi:type="Combinator">
+                                      <Combinator xsi:type="q1:UpdateUniform">
+                                        <q1:UniformName>lightposition</q1:UniformName>
+                                        <q1:ShaderName>TetrahedronLight</q1:ShaderName>
+                                      </Combinator>
+                                    </Expression>
+                                    <Expression xsi:type="Multiply" />
+                                  </Nodes>
+                                  <Edges>
+                                    <Edge>
+                                      <From>0</From>
+                                      <To>19</To>
+                                      <Label>Source1</Label>
+                                    </Edge>
+                                    <Edge>
+                                      <From>1</From>
+                                      <To>0</To>
+                                      <Label>Source1</Label>
+                                    </Edge>
+                                    <Edge>
+                                      <From>2</From>
+                                      <To>11</To>
+                                      <Label>Source1</Label>
+                                    </Edge>
+                                    <Edge>
+                                      <From>3</From>
+                                      <To>2</To>
+                                      <Label>Source1</Label>
+                                    </Edge>
+                                    <Edge>
+                                      <From>4</From>
+                                      <To>3</To>
+                                      <Label>Source1</Label>
+                                    </Edge>
+                                    <Edge>
+                                      <From>5</From>
+                                      <To>4</To>
+                                      <Label>Source1</Label>
+                                    </Edge>
+                                    <Edge>
+                                      <From>6</From>
+                                      <To>5</To>
+                                      <Label>Source1</Label>
+                                    </Edge>
+                                    <Edge>
+                                      <From>7</From>
+                                      <To>6</To>
+                                      <Label>Source1</Label>
+                                    </Edge>
+                                    <Edge>
+                                      <From>7</From>
+                                      <To>14</To>
+                                      <Label>Source1</Label>
+                                    </Edge>
+                                    <Edge>
+                                      <From>8</From>
+                                      <To>4</To>
+                                      <Label>Source2</Label>
+                                    </Edge>
+                                    <Edge>
+                                      <From>8</From>
+                                      <To>2</To>
+                                      <Label>Source2</Label>
+                                    </Edge>
+                                    <Edge>
+                                      <From>8</From>
+                                      <To>3</To>
+                                      <Label>Source2</Label>
+                                    </Edge>
+                                    <Edge>
+                                      <From>8</From>
+                                      <To>16</To>
+                                      <Label>Source2</Label>
+                                    </Edge>
+                                    <Edge>
+                                      <From>8</From>
+                                      <To>18</To>
+                                      <Label>Source2</Label>
+                                    </Edge>
+                                    <Edge>
+                                      <From>9</From>
+                                      <To>13</To>
+                                      <Label>Source1</Label>
+                                    </Edge>
+                                    <Edge>
+                                      <From>10</From>
+                                      <To>0</To>
+                                      <Label>Source2</Label>
+                                    </Edge>
+                                    <Edge>
+                                      <From>12</From>
+                                      <To>13</To>
+                                      <Label>Source2</Label>
+                                    </Edge>
+                                    <Edge>
+                                      <From>13</From>
+                                      <To>7</To>
+                                      <Label>Source2</Label>
+                                    </Edge>
+                                    <Edge>
+                                      <From>14</From>
+                                      <To>15</To>
+                                      <Label>Source1</Label>
+                                    </Edge>
+                                    <Edge>
+                                      <From>15</From>
+                                      <To>16</To>
+                                      <Label>Source1</Label>
+                                    </Edge>
+                                    <Edge>
+                                      <From>17</From>
+                                      <To>18</To>
+                                      <Label>Source1</Label>
+                                    </Edge>
+                                    <Edge>
+                                      <From>19</From>
+                                      <To>7</To>
+                                      <Label>Source1</Label>
+                                    </Edge>
+                                  </Edges>
+                                </Workflow>
+                              </Expression>
+                              <Expression xsi:type="MemberSelector">
+                                <Selector>Source.Item1</Selector>
+                              </Expression>
+                              <Expression xsi:type="Condition">
+                                <Workflow>
+                                  <Nodes>
+                                    <Expression xsi:type="WorkflowInput">
+                                      <Name>Source1</Name>
+                                    </Expression>
+                                    <Expression xsi:type="WorkflowOutput" />
+                                    <Expression xsi:type="MemberSelector">
+                                      <Selector>Source.Item2</Selector>
+                                    </Expression>
+                                    <Expression xsi:type="Equal">
+                                      <Operand xsi:type="IntProperty">
+                                        <Value>4</Value>
+                                      </Operand>
+                                    </Expression>
+                                  </Nodes>
+                                  <Edges>
+                                    <Edge>
+                                      <From>0</From>
+                                      <To>2</To>
+                                      <Label>Source1</Label>
+                                    </Edge>
+                                    <Edge>
+                                      <From>2</From>
+                                      <To>3</To>
+                                      <Label>Source1</Label>
+                                    </Edge>
+                                    <Edge>
+                                      <From>3</From>
+                                      <To>1</To>
+                                      <Label>Source1</Label>
+                                    </Edge>
+                                  </Edges>
+                                </Workflow>
+                              </Expression>
                             </Nodes>
                             <Edges>
                               <Edge>
@@ -2337,6 +4396,21 @@ Item5 as Id
                               <Edge>
                                 <From>2</From>
                                 <To>8</To>
+                                <Label>Source1</Label>
+                              </Edge>
+                              <Edge>
+                                <From>2</From>
+                                <To>11</To>
+                                <Label>Source1</Label>
+                              </Edge>
+                              <Edge>
+                                <From>2</From>
+                                <To>14</To>
+                                <Label>Source1</Label>
+                              </Edge>
+                              <Edge>
+                                <From>2</From>
+                                <To>17</To>
                                 <Label>Source1</Label>
                               </Edge>
                               <Edge>
@@ -2364,8 +4438,71 @@ Item5 as Id
                                 <To>7</To>
                                 <Label>Source1</Label>
                               </Edge>
+                              <Edge>
+                                <From>10</From>
+                                <To>9</To>
+                                <Label>Source1</Label>
+                              </Edge>
+                              <Edge>
+                                <From>11</From>
+                                <To>10</To>
+                                <Label>Source1</Label>
+                              </Edge>
+                              <Edge>
+                                <From>13</From>
+                                <To>12</To>
+                                <Label>Source1</Label>
+                              </Edge>
+                              <Edge>
+                                <From>14</From>
+                                <To>13</To>
+                                <Label>Source1</Label>
+                              </Edge>
+                              <Edge>
+                                <From>16</From>
+                                <To>15</To>
+                                <Label>Source1</Label>
+                              </Edge>
+                              <Edge>
+                                <From>17</From>
+                                <To>16</To>
+                                <Label>Source1</Label>
+                              </Edge>
                             </Edges>
                           </Workflow>
+                        </Expression>
+                        <Expression xsi:type="Combinator">
+                          <Combinator xsi:type="q1:CreateVector3">
+                            <q1:X>21</q1:X>
+                            <q1:Y>0</q1:Y>
+                            <q1:Z>-40</q1:Z>
+                          </Combinator>
+                        </Expression>
+                        <Expression xsi:type="InputMapping">
+                          <PropertyMappings>
+                            <Property name="Z" />
+                          </PropertyMappings>
+                        </Expression>
+                        <Expression xsi:type="Combinator">
+                          <Combinator xsi:type="CombineLatest" />
+                        </Expression>
+                        <Expression xsi:type="ReplaySubject">
+                          <Name>Offset</Name>
+                          <BufferSize>1</BufferSize>
+                        </Expression>
+                        <Expression xsi:type="SubscribeSubject">
+                          <Name>Offset</Name>
+                        </Expression>
+                        <Expression xsi:type="Add" />
+                        <Expression xsi:type="Multiply">
+                          <Operand xsi:type="IntProperty">
+                            <Value>5</Value>
+                          </Operand>
+                        </Expression>
+                        <Expression xsi:type="Subtract">
+                          <Operand xsi:type="IntProperty">
+                            <Value>50</Value>
+                          </Operand>
                         </Expression>
                       </Nodes>
                       <Edges>
@@ -2376,7 +4513,7 @@ Item5 as Id
                         </Edge>
                         <Edge>
                           <From>1</From>
-                          <To>8</To>
+                          <To>34</To>
                           <Label>Source1</Label>
                         </Edge>
                         <Edge>
@@ -2386,12 +4523,12 @@ Item5 as Id
                         </Edge>
                         <Edge>
                           <From>2</From>
-                          <To>19</To>
+                          <To>20</To>
                           <Label>Source1</Label>
                         </Edge>
                         <Edge>
                           <From>2</From>
-                          <To>23</To>
+                          <To>24</To>
                           <Label>Source2</Label>
                         </Edge>
                         <Edge>
@@ -2421,7 +4558,7 @@ Item5 as Id
                         </Edge>
                         <Edge>
                           <From>6</From>
-                          <To>26</To>
+                          <To>27</To>
                           <Label>Source1</Label>
                         </Edge>
                         <Edge>
@@ -2436,22 +4573,22 @@ Item5 as Id
                         </Edge>
                         <Edge>
                           <From>10</From>
-                          <To>21</To>
+                          <To>22</To>
                           <Label>Source1</Label>
                         </Edge>
                         <Edge>
                           <From>10</From>
-                          <To>20</To>
+                          <To>21</To>
                           <Label>Source1</Label>
                         </Edge>
                         <Edge>
                           <From>11</From>
-                          <To>24</To>
+                          <To>25</To>
                           <Label>Source1</Label>
                         </Edge>
                         <Edge>
                           <From>12</From>
-                          <To>17</To>
+                          <To>18</To>
                           <Label>Source1</Label>
                         </Edge>
                         <Edge>
@@ -2471,62 +4608,107 @@ Item5 as Id
                         </Edge>
                         <Edge>
                           <From>16</From>
-                          <To>10</To>
+                          <To>38</To>
                           <Label>Source1</Label>
                         </Edge>
                         <Edge>
                           <From>17</From>
-                          <To>19</To>
-                          <Label>Source2</Label>
+                          <To>10</To>
+                          <Label>Source1</Label>
                         </Edge>
                         <Edge>
                           <From>18</From>
+                          <To>20</To>
+                          <Label>Source2</Label>
+                        </Edge>
+                        <Edge>
+                          <From>19</From>
                           <To>13</To>
                           <Label>Source1</Label>
                         </Edge>
                         <Edge>
-                          <From>19</From>
-                          <To>23</To>
-                          <Label>Source1</Label>
-                        </Edge>
-                        <Edge>
                           <From>20</From>
-                          <To>30</To>
+                          <To>24</To>
                           <Label>Source1</Label>
                         </Edge>
                         <Edge>
                           <From>21</From>
-                          <To>22</To>
+                          <To>31</To>
                           <Label>Source1</Label>
                         </Edge>
                         <Edge>
-                          <From>23</From>
-                          <To>16</To>
+                          <From>22</From>
+                          <To>23</To>
                           <Label>Source1</Label>
                         </Edge>
                         <Edge>
                           <From>24</From>
-                          <To>25</To>
+                          <To>17</To>
                           <Label>Source1</Label>
                         </Edge>
                         <Edge>
                           <From>25</From>
-                          <To>14</To>
+                          <To>26</To>
                           <Label>Source1</Label>
                         </Edge>
                         <Edge>
                           <From>26</From>
-                          <To>18</To>
+                          <To>14</To>
                           <Label>Source1</Label>
                         </Edge>
                         <Edge>
                           <From>27</From>
+                          <To>19</To>
+                          <Label>Source1</Label>
+                        </Edge>
+                        <Edge>
+                          <From>28</From>
+                          <To>30</To>
+                          <Label>Source1</Label>
+                        </Edge>
+                        <Edge>
+                          <From>28</From>
+                          <To>16</To>
+                          <Label>Source1</Label>
+                        </Edge>
+                        <Edge>
+                          <From>30</From>
                           <To>29</To>
                           <Label>Source1</Label>
                         </Edge>
                         <Edge>
-                          <From>29</From>
-                          <To>28</To>
+                          <From>32</From>
+                          <To>35</To>
+                          <Label>Source1</Label>
+                        </Edge>
+                        <Edge>
+                          <From>33</From>
+                          <To>32</To>
+                          <Label>Source1</Label>
+                        </Edge>
+                        <Edge>
+                          <From>34</From>
+                          <To>37</To>
+                          <Label>Source1</Label>
+                        </Edge>
+                        <Edge>
+                          <From>36</From>
+                          <To>34</To>
+                          <Label>Source2</Label>
+                        </Edge>
+                        <Edge>
+                          <From>37</From>
+                          <To>8</To>
+                          <Label>Source1</Label>
+                        </Edge>
+                        <Edge>
+                          <From>38</From>
+                          <To>39</To>
+                          <Label>Source1</Label>
+                        </Edge>
+                        <Edge>
+                          <From>39</From>
+                          <To>33</To>
                           <Label>Source1</Label>
                         </Edge>
                       </Edges>
@@ -3274,9 +5456,9 @@ Item5 as Id
                       <Nodes>
                         <Expression xsi:type="Combinator">
                           <Combinator xsi:type="q1:CreateVector3">
-                            <q1:X>2.499875</q1:X>
-                            <q1:Y>2.49654174</q1:Y>
-                            <q1:Z>2.4995</q1:Z>
+                            <q1:X>2.499625</q1:X>
+                            <q1:Y>2.50066662</q1:Y>
+                            <q1:Z>2.50020838</q1:Z>
                           </Combinator>
                         </Expression>
                         <Expression xsi:type="InputMapping">
@@ -3316,9 +5498,9 @@ Item5 as Id
                       <Nodes>
                         <Expression xsi:type="Combinator">
                           <Combinator xsi:type="q1:CreateVector3">
-                            <q1:X>0.00125050545</q1:X>
-                            <q1:Y>0.0262504816</q1:Y>
-                            <q1:Z>2.95000076</q1:Z>
+                            <q1:X>-0.00375032425</q1:X>
+                            <q1:Y>0.199999809</q1:Y>
+                            <q1:Z>3.02124977</q1:Z>
                           </Combinator>
                         </Expression>
                         <Expression xsi:type="InputMapping">
@@ -3358,9 +5540,9 @@ Item5 as Id
                       <Nodes>
                         <Expression xsi:type="Combinator">
                           <Combinator xsi:type="q1:CreateVector3">
-                            <q1:X>0.9511111</q1:X>
-                            <q1:Y>0.549999952</q1:Y>
-                            <q1:Z>0.131111085</q1:Z>
+                            <q1:X>0.164722189</q1:X>
+                            <q1:Y>0.7802778</q1:Y>
+                            <q1:Z>0.2673611</q1:Z>
                           </Combinator>
                         </Expression>
                         <Expression xsi:type="InputMapping">
@@ -3511,35 +5693,35 @@ Item5 as Id
                           <Combinator xsi:type="q5:Rescale">
                             <q5:Min>0</q5:Min>
                             <q5:Max>1</q5:Max>
-                            <q5:RangeMin>-0.2</q5:RangeMin>
-                            <q5:RangeMax>0.2</q5:RangeMax>
+                            <q5:RangeMin>-0.05</q5:RangeMin>
+                            <q5:RangeMax>0.05</q5:RangeMax>
                           </Combinator>
                         </Expression>
                         <Expression xsi:type="Combinator">
                           <Combinator xsi:type="q5:Rescale">
                             <q5:Min>0</q5:Min>
                             <q5:Max>1</q5:Max>
-                            <q5:RangeMin>-0.2</q5:RangeMin>
-                            <q5:RangeMax>0.2</q5:RangeMax>
+                            <q5:RangeMin>-0.05</q5:RangeMin>
+                            <q5:RangeMax>0.05</q5:RangeMax>
                           </Combinator>
                         </Expression>
                         <Expression xsi:type="Combinator">
                           <Combinator xsi:type="q5:Rescale">
                             <q5:Min>0</q5:Min>
                             <q5:Max>1</q5:Max>
-                            <q5:RangeMin>-0.2</q5:RangeMin>
-                            <q5:RangeMax>0.2</q5:RangeMax>
+                            <q5:RangeMin>-0.05</q5:RangeMin>
+                            <q5:RangeMax>0.05</q5:RangeMax>
                           </Combinator>
                         </Expression>
                         <Expression xsi:type="ExternalizedPropertyOfDoubleRescale">
                           <MemberName>RangeMin</MemberName>
                           <Name>RangeMin</Name>
-                          <Value>-0.2</Value>
+                          <Value>-0.05</Value>
                         </Expression>
                         <Expression xsi:type="ExternalizedPropertyOfDoubleRescale">
                           <MemberName>RangeMax</MemberName>
                           <Name>RangeMax</Name>
-                          <Value>0.2</Value>
+                          <Value>0.05</Value>
                         </Expression>
                         <Expression xsi:type="Combinator">
                           <Combinator xsi:type="Zip" />
@@ -3659,9 +5841,9 @@ Item5 as Id
                       <Nodes>
                         <Expression xsi:type="Combinator">
                           <Combinator xsi:type="q1:CreateVector3">
-                            <q1:X>-9.989739E-06</q1:X>
-                            <q1:Y>-0.000276660925</q1:Y>
-                            <q1:Z>-3.99947166E-05</q1:Z>
+                            <q1:X>-7.50124445E-06</q1:X>
+                            <q1:Y>1.33335589E-05</q1:Y>
+                            <q1:Z>4.16636476E-06</q1:Z>
                           </Combinator>
                         </Expression>
                         <Expression xsi:type="InputMapping">
@@ -4774,6 +6956,7 @@ Item5 as Id
     <Type>Bonsai.Shaders.CreateRotationZ, Bonsai.Shaders, Version=0.10.0.0, Culture=neutral, PublicKeyToken=null</Type>
     <Type>Bonsai.Shaders.CreateScale, Bonsai.Shaders, Version=0.10.0.0, Culture=neutral, PublicKeyToken=null</Type>
     <Type>Bonsai.Expressions.ModBuilder, Bonsai.Core, Version=2.2.0.0, Culture=neutral, PublicKeyToken=null</Type>
+    <Type>Bonsai.Expressions.SubtractBuilder, Bonsai.Core, Version=2.2.0.0, Culture=neutral, PublicKeyToken=null</Type>
     <Type>Bonsai.Dsp.SelectChannels, Bonsai.Dsp, Version=2.2.0.0, Culture=neutral, PublicKeyToken=null</Type>
     <Type>Bonsai.Dsp.Average, Bonsai.Dsp, Version=2.2.0.0, Culture=neutral, PublicKeyToken=null</Type>
     <Type>Bonsai.Dsp.Buffer, Bonsai.Dsp, Version=2.2.0.0, Culture=neutral, PublicKeyToken=null</Type>
