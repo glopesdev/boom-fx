@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <WorkflowBuilder Version="2.2.0">
-  <Workflow xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:q1="clr-namespace:Bonsai.Shaders;assembly=Bonsai.Shaders" xmlns:q2="clr-namespace:Bonsai.Scripting;assembly=Bonsai.Scripting" xmlns:q3="clr-namespace:Bonsai.ChampalimaudHardware;assembly=Bonsai.ChampalimaudHardware" xmlns:q4="clr-namespace:Bonsai.Dsp;assembly=Bonsai.Dsp" xmlns="https://horizongir.org/bonsai">
+  <Workflow xmlns:q2="clr-namespace:Bonsai.Scripting;assembly=Bonsai.Scripting" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:q3="clr-namespace:Bonsai.ChampalimaudHardware;assembly=Bonsai.ChampalimaudHardware" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:q5="clr-namespace:Bonsai.Dsp;assembly=Bonsai.Dsp" xmlns:q4="clr-namespace:Bonsai.Shaders.Input;assembly=Bonsai.Shaders" xmlns:q1="clr-namespace:Bonsai.Shaders;assembly=Bonsai.Shaders" xmlns="https://horizongir.org/bonsai">
     <Nodes>
       <Expression xsi:type="Combinator">
         <Combinator xsi:type="q1:UpdateFrame" />
@@ -11,7 +11,7 @@
       <Expression xsi:type="Combinator">
         <Combinator xsi:type="q1:CreateTranslation">
           <q1:X>0</q1:X>
-          <q1:Y>2830.41357</q1:Y>
+          <q1:Y>6522.58545</q1:Y>
           <q1:Z>0</q1:Z>
         </Combinator>
       </Expression>
@@ -58,12 +58,12 @@
                     <Combinator xsi:type="q1:CreateLookAt">
                       <q1:Eye>
                         <q1:X>79</q1:X>
-                        <q1:Y>2810.41357</q1:Y>
+                        <q1:Y>6502.58545</q1:Y>
                         <q1:Z>0</q1:Z>
                       </q1:Eye>
                       <q1:Target>
                         <q1:X>0</q1:X>
-                        <q1:Y>2810.41357</q1:Y>
+                        <q1:Y>6502.58545</q1:Y>
                         <q1:Z>0</q1:Z>
                       </q1:Target>
                       <q1:Up>
@@ -125,7 +125,7 @@
                   <Expression xsi:type="Add" />
                   <Expression xsi:type="Combinator">
                     <Combinator xsi:type="q1:CreateRotationY">
-                      <q1:Angle>41.98</q1:Angle>
+                      <q1:Angle>0</q1:Angle>
                     </Combinator>
                   </Expression>
                   <Expression xsi:type="InputMapping">
@@ -142,6 +142,25 @@
                     <q2:Expression>0.005</q2:Expression>
                   </Expression>
                   <Expression xsi:type="Accumulate" />
+                  <Expression xsi:type="ExternalizedPropertyOfDoubleMultiplyBuilder">
+                    <MemberName>Value</MemberName>
+                    <Name>Value</Name>
+                    <Value>0</Value>
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="q4:KeyDown" />
+                  </Expression>
+                  <Expression xsi:type="MemberSelector">
+                    <Selector>Source.EventArgs.Key</Selector>
+                  </Expression>
+                  <Expression xsi:type="Equal">
+                    <Operand xsi:type="WorkflowPropertyOfKey">
+                      <Value>R</Value>
+                    </Operand>
+                  </Expression>
+                  <Expression xsi:type="q2:ExpressionTransform">
+                    <q2:Expression>it ? 1 : 0</q2:Expression>
+                  </Expression>
                 </Nodes>
                 <Edges>
                   <Edge>
@@ -254,6 +273,31 @@
                     <To>17</To>
                     <Label>Source1</Label>
                   </Edge>
+                  <Edge>
+                    <From>21</From>
+                    <To>18</To>
+                    <Label>Source2</Label>
+                  </Edge>
+                  <Edge>
+                    <From>22</From>
+                    <To>23</To>
+                    <Label>Source1</Label>
+                  </Edge>
+                  <Edge>
+                    <From>23</From>
+                    <To>24</To>
+                    <Label>Source1</Label>
+                  </Edge>
+                  <Edge>
+                    <From>24</From>
+                    <To>25</To>
+                    <Label>Source1</Label>
+                  </Edge>
+                  <Edge>
+                    <From>25</From>
+                    <To>21</To>
+                    <Label>Source1</Label>
+                  </Edge>
                 </Edges>
               </Workflow>
             </Expression>
@@ -308,27 +352,27 @@ Item5 as Id
                           <Selector>Source.Item3</Selector>
                         </Expression>
                         <Expression xsi:type="Combinator">
-                          <Combinator xsi:type="q4:Rescale">
-                            <q4:Min>0</q4:Min>
-                            <q4:Max>1</q4:Max>
-                            <q4:RangeMin>0</q4:RangeMin>
-                            <q4:RangeMax>5</q4:RangeMax>
+                          <Combinator xsi:type="q5:Rescale">
+                            <q5:Min>0</q5:Min>
+                            <q5:Max>1</q5:Max>
+                            <q5:RangeMin>0</q5:RangeMin>
+                            <q5:RangeMax>5</q5:RangeMax>
                           </Combinator>
                         </Expression>
                         <Expression xsi:type="Combinator">
-                          <Combinator xsi:type="q4:Rescale">
-                            <q4:Min>0</q4:Min>
-                            <q4:Max>1</q4:Max>
-                            <q4:RangeMin>0</q4:RangeMin>
-                            <q4:RangeMax>5</q4:RangeMax>
+                          <Combinator xsi:type="q5:Rescale">
+                            <q5:Min>0</q5:Min>
+                            <q5:Max>1</q5:Max>
+                            <q5:RangeMin>0</q5:RangeMin>
+                            <q5:RangeMax>5</q5:RangeMax>
                           </Combinator>
                         </Expression>
                         <Expression xsi:type="Combinator">
-                          <Combinator xsi:type="q4:Rescale">
-                            <q4:Min>0</q4:Min>
-                            <q4:Max>1</q4:Max>
-                            <q4:RangeMin>0</q4:RangeMin>
-                            <q4:RangeMax>5</q4:RangeMax>
+                          <Combinator xsi:type="q5:Rescale">
+                            <q5:Min>0</q5:Min>
+                            <q5:Max>1</q5:Max>
+                            <q5:RangeMin>0</q5:RangeMin>
+                            <q5:RangeMax>5</q5:RangeMax>
                           </Combinator>
                         </Expression>
                         <Expression xsi:type="ExternalizedPropertyOfDoubleRescale">
@@ -471,27 +515,27 @@ Item5 as Id
                           <Selector>Source.Item3</Selector>
                         </Expression>
                         <Expression xsi:type="Combinator">
-                          <Combinator xsi:type="q4:Rescale">
-                            <q4:Min>0</q4:Min>
-                            <q4:Max>1</q4:Max>
-                            <q4:RangeMin>0</q4:RangeMin>
-                            <q4:RangeMax>1</q4:RangeMax>
+                          <Combinator xsi:type="q5:Rescale">
+                            <q5:Min>0</q5:Min>
+                            <q5:Max>1</q5:Max>
+                            <q5:RangeMin>0</q5:RangeMin>
+                            <q5:RangeMax>1</q5:RangeMax>
                           </Combinator>
                         </Expression>
                         <Expression xsi:type="Combinator">
-                          <Combinator xsi:type="q4:Rescale">
-                            <q4:Min>0</q4:Min>
-                            <q4:Max>1</q4:Max>
-                            <q4:RangeMin>0</q4:RangeMin>
-                            <q4:RangeMax>1</q4:RangeMax>
+                          <Combinator xsi:type="q5:Rescale">
+                            <q5:Min>0</q5:Min>
+                            <q5:Max>1</q5:Max>
+                            <q5:RangeMin>0</q5:RangeMin>
+                            <q5:RangeMax>1</q5:RangeMax>
                           </Combinator>
                         </Expression>
                         <Expression xsi:type="Combinator">
-                          <Combinator xsi:type="q4:Rescale">
-                            <q4:Min>0</q4:Min>
-                            <q4:Max>1</q4:Max>
-                            <q4:RangeMin>0</q4:RangeMin>
-                            <q4:RangeMax>1</q4:RangeMax>
+                          <Combinator xsi:type="q5:Rescale">
+                            <q5:Min>0</q5:Min>
+                            <q5:Max>1</q5:Max>
+                            <q5:RangeMin>0</q5:RangeMin>
+                            <q5:RangeMax>1</q5:RangeMax>
                           </Combinator>
                         </Expression>
                         <Expression xsi:type="ExternalizedPropertyOfDoubleRescale">
@@ -2505,9 +2549,9 @@ Item5 as Id
                         </Expression>
                         <Expression xsi:type="Combinator">
                           <Combinator xsi:type="q1:CreateTranslation">
-                            <q1:X>-0.160000324</q1:X>
-                            <q1:Y>0.108749866</q1:Y>
-                            <q1:Z>17.89375</q1:Z>
+                            <q1:X>-0.04374981</q1:X>
+                            <q1:Y>0.09499967</q1:Y>
+                            <q1:Z>17.9049988</q1:Z>
                           </Combinator>
                         </Expression>
                         <Expression xsi:type="SubscribeSubject">
@@ -2638,17 +2682,17 @@ Item5 as Id
                               </Expression>
                               <Expression xsi:type="Combinator">
                                 <Combinator xsi:type="q1:CreateRotationY">
-                                  <q1:Angle>0.000217497349</q1:Angle>
+                                  <q1:Angle>0.000330001116</q1:Angle>
                                 </Combinator>
                               </Expression>
                               <Expression xsi:type="Combinator">
                                 <Combinator xsi:type="q1:CreateRotationX">
-                                  <q1:Angle>-7.66664743E-05</q1:Angle>
+                                  <q1:Angle>-0.000108334425</q1:Angle>
                                 </Combinator>
                               </Expression>
                               <Expression xsi:type="Combinator">
                                 <Combinator xsi:type="q1:CreateRotationZ">
-                                  <q1:Angle>7.583499E-05</q1:Angle>
+                                  <q1:Angle>6.1666964E-05</q1:Angle>
                                 </Combinator>
                               </Expression>
                               <Expression xsi:type="Combinator">
@@ -2740,9 +2784,9 @@ Item5 as Id
                         </Expression>
                         <Expression xsi:type="Combinator">
                           <Combinator xsi:type="q1:CreateScale">
-                            <q1:X>2.49616671</q1:X>
-                            <q1:Y>2.51087475</q1:Y>
-                            <q1:Z>2.50379181</q1:Z>
+                            <q1:X>2.49458337</q1:X>
+                            <q1:Y>2.5165</q1:Y>
+                            <q1:Z>2.50308323</q1:Z>
                           </Combinator>
                         </Expression>
                         <Expression xsi:type="MemberSelector">
@@ -4578,22 +4622,22 @@ Item5 as Id
                           <q2:Expression>single(it)</q2:Expression>
                         </Expression>
                         <Expression xsi:type="Combinator">
-                          <Combinator xsi:type="q4:SelectChannels">
-                            <q4:Channels>
-                              <q4:int>0</q4:int>
-                            </q4:Channels>
+                          <Combinator xsi:type="q5:SelectChannels">
+                            <q5:Channels>
+                              <q5:int>0</q5:int>
+                            </q5:Channels>
                           </Combinator>
                         </Expression>
                         <Expression xsi:type="MemberSelector">
                           <Selector>Source.Val0</Selector>
                         </Expression>
                         <Expression xsi:type="Combinator">
-                          <Combinator xsi:type="q4:Average" />
+                          <Combinator xsi:type="q5:Average" />
                         </Expression>
                         <Expression xsi:type="Combinator">
-                          <Combinator xsi:type="q4:Buffer">
-                            <q4:Count>4</q4:Count>
-                            <q4:Skip>1</q4:Skip>
+                          <Combinator xsi:type="q5:Buffer">
+                            <q5:Count>4</q5:Count>
+                            <q5:Skip>1</q5:Skip>
                           </Combinator>
                         </Expression>
                         <Expression xsi:type="WorkflowInput">
@@ -4601,17 +4645,17 @@ Item5 as Id
                         </Expression>
                         <Expression xsi:type="WorkflowOutput" />
                         <Expression xsi:type="Combinator">
-                          <Combinator xsi:type="q4:SelectChannels">
-                            <q4:Channels>
-                              <q4:int>1</q4:int>
-                            </q4:Channels>
+                          <Combinator xsi:type="q5:SelectChannels">
+                            <q5:Channels>
+                              <q5:int>1</q5:int>
+                            </q5:Channels>
                           </Combinator>
                         </Expression>
                         <Expression xsi:type="Combinator">
-                          <Combinator xsi:type="q4:SelectChannels">
-                            <q4:Channels>
-                              <q4:int>2</q4:int>
-                            </q4:Channels>
+                          <Combinator xsi:type="q5:SelectChannels">
+                            <q5:Channels>
+                              <q5:int>2</q5:int>
+                            </q5:Channels>
                           </Combinator>
                         </Expression>
                         <Expression xsi:type="q2:ExpressionTransform">
@@ -4621,7 +4665,7 @@ Item5 as Id
                           <Selector>Source.Val0</Selector>
                         </Expression>
                         <Expression xsi:type="Combinator">
-                          <Combinator xsi:type="q4:Average" />
+                          <Combinator xsi:type="q5:Average" />
                         </Expression>
                         <Expression xsi:type="q2:ExpressionTransform">
                           <q2:Expression>single(it)</q2:Expression>
@@ -4630,7 +4674,7 @@ Item5 as Id
                           <Selector>Source.Val0</Selector>
                         </Expression>
                         <Expression xsi:type="Combinator">
-                          <Combinator xsi:type="q4:Average" />
+                          <Combinator xsi:type="q5:Average" />
                         </Expression>
                         <Expression xsi:type="Combinator">
                           <Combinator xsi:type="Zip" />
@@ -4733,22 +4777,22 @@ Item5 as Id
                           <q2:Expression>single(it)</q2:Expression>
                         </Expression>
                         <Expression xsi:type="Combinator">
-                          <Combinator xsi:type="q4:SelectChannels">
-                            <q4:Channels>
-                              <q4:int>0</q4:int>
-                            </q4:Channels>
+                          <Combinator xsi:type="q5:SelectChannels">
+                            <q5:Channels>
+                              <q5:int>0</q5:int>
+                            </q5:Channels>
                           </Combinator>
                         </Expression>
                         <Expression xsi:type="MemberSelector">
                           <Selector>Source.Val0</Selector>
                         </Expression>
                         <Expression xsi:type="Combinator">
-                          <Combinator xsi:type="q4:Average" />
+                          <Combinator xsi:type="q5:Average" />
                         </Expression>
                         <Expression xsi:type="Combinator">
-                          <Combinator xsi:type="q4:Buffer">
-                            <q4:Count>4</q4:Count>
-                            <q4:Skip>1</q4:Skip>
+                          <Combinator xsi:type="q5:Buffer">
+                            <q5:Count>4</q5:Count>
+                            <q5:Skip>1</q5:Skip>
                           </Combinator>
                         </Expression>
                         <Expression xsi:type="WorkflowInput">
@@ -4756,17 +4800,17 @@ Item5 as Id
                         </Expression>
                         <Expression xsi:type="WorkflowOutput" />
                         <Expression xsi:type="Combinator">
-                          <Combinator xsi:type="q4:SelectChannels">
-                            <q4:Channels>
-                              <q4:int>1</q4:int>
-                            </q4:Channels>
+                          <Combinator xsi:type="q5:SelectChannels">
+                            <q5:Channels>
+                              <q5:int>1</q5:int>
+                            </q5:Channels>
                           </Combinator>
                         </Expression>
                         <Expression xsi:type="Combinator">
-                          <Combinator xsi:type="q4:SelectChannels">
-                            <q4:Channels>
-                              <q4:int>2</q4:int>
-                            </q4:Channels>
+                          <Combinator xsi:type="q5:SelectChannels">
+                            <q5:Channels>
+                              <q5:int>2</q5:int>
+                            </q5:Channels>
                           </Combinator>
                         </Expression>
                         <Expression xsi:type="q2:ExpressionTransform">
@@ -4776,7 +4820,7 @@ Item5 as Id
                           <Selector>Source.Val0</Selector>
                         </Expression>
                         <Expression xsi:type="Combinator">
-                          <Combinator xsi:type="q4:Average" />
+                          <Combinator xsi:type="q5:Average" />
                         </Expression>
                         <Expression xsi:type="q2:ExpressionTransform">
                           <q2:Expression>single(it)</q2:Expression>
@@ -4785,7 +4829,7 @@ Item5 as Id
                           <Selector>Source.Val0</Selector>
                         </Expression>
                         <Expression xsi:type="Combinator">
-                          <Combinator xsi:type="q4:Average" />
+                          <Combinator xsi:type="q5:Average" />
                         </Expression>
                         <Expression xsi:type="Combinator">
                           <Combinator xsi:type="Zip" />
@@ -4898,27 +4942,27 @@ Item5 as Id
                           <Selector>Source.Item3</Selector>
                         </Expression>
                         <Expression xsi:type="Combinator">
-                          <Combinator xsi:type="q4:Rescale">
-                            <q4:Min>0</q4:Min>
-                            <q4:Max>1</q4:Max>
-                            <q4:RangeMin>10</q4:RangeMin>
-                            <q4:RangeMax>-10</q4:RangeMax>
+                          <Combinator xsi:type="q5:Rescale">
+                            <q5:Min>0</q5:Min>
+                            <q5:Max>1</q5:Max>
+                            <q5:RangeMin>10</q5:RangeMin>
+                            <q5:RangeMax>-10</q5:RangeMax>
                           </Combinator>
                         </Expression>
                         <Expression xsi:type="Combinator">
-                          <Combinator xsi:type="q4:Rescale">
-                            <q4:Min>0</q4:Min>
-                            <q4:Max>1</q4:Max>
-                            <q4:RangeMin>10</q4:RangeMin>
-                            <q4:RangeMax>-10</q4:RangeMax>
+                          <Combinator xsi:type="q5:Rescale">
+                            <q5:Min>0</q5:Min>
+                            <q5:Max>1</q5:Max>
+                            <q5:RangeMin>10</q5:RangeMin>
+                            <q5:RangeMax>-10</q5:RangeMax>
                           </Combinator>
                         </Expression>
                         <Expression xsi:type="Combinator">
-                          <Combinator xsi:type="q4:Rescale">
-                            <q4:Min>0</q4:Min>
-                            <q4:Max>1</q4:Max>
-                            <q4:RangeMin>10</q4:RangeMin>
-                            <q4:RangeMax>-10</q4:RangeMax>
+                          <Combinator xsi:type="q5:Rescale">
+                            <q5:Min>0</q5:Min>
+                            <q5:Max>1</q5:Max>
+                            <q5:RangeMin>10</q5:RangeMin>
+                            <q5:RangeMax>-10</q5:RangeMax>
                           </Combinator>
                         </Expression>
                         <Expression xsi:type="ExternalizedPropertyOfDoubleRescale">
@@ -5089,19 +5133,19 @@ Item5 as Id
                     </Workflow>
                   </Expression>
                   <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="q4:Rescale">
-                      <q4:Min>15000</q4:Min>
-                      <q4:Max>-15000</q4:Max>
-                      <q4:RangeMin>0</q4:RangeMin>
-                      <q4:RangeMax>1</q4:RangeMax>
+                    <Combinator xsi:type="q5:Rescale">
+                      <q5:Min>15000</q5:Min>
+                      <q5:Max>-15000</q5:Max>
+                      <q5:RangeMin>0</q5:RangeMin>
+                      <q5:RangeMax>1</q5:RangeMax>
                     </Combinator>
                   </Expression>
                   <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="q4:Rescale">
-                      <q4:Min>1300</q4:Min>
-                      <q4:Max>-500</q4:Max>
-                      <q4:RangeMin>0</q4:RangeMin>
-                      <q4:RangeMax>1</q4:RangeMax>
+                    <Combinator xsi:type="q5:Rescale">
+                      <q5:Min>1300</q5:Min>
+                      <q5:Max>-500</q5:Max>
+                      <q5:RangeMin>0</q5:RangeMin>
+                      <q5:RangeMax>1</q5:RangeMax>
                     </Combinator>
                   </Expression>
                   <Expression xsi:type="NestedWorkflow">
@@ -5112,22 +5156,22 @@ Item5 as Id
                           <q2:Expression>single(it)</q2:Expression>
                         </Expression>
                         <Expression xsi:type="Combinator">
-                          <Combinator xsi:type="q4:SelectChannels">
-                            <q4:Channels>
-                              <q4:int>0</q4:int>
-                            </q4:Channels>
+                          <Combinator xsi:type="q5:SelectChannels">
+                            <q5:Channels>
+                              <q5:int>0</q5:int>
+                            </q5:Channels>
                           </Combinator>
                         </Expression>
                         <Expression xsi:type="MemberSelector">
                           <Selector>Source.Val0</Selector>
                         </Expression>
                         <Expression xsi:type="Combinator">
-                          <Combinator xsi:type="q4:Average" />
+                          <Combinator xsi:type="q5:Average" />
                         </Expression>
                         <Expression xsi:type="Combinator">
-                          <Combinator xsi:type="q4:Buffer">
-                            <q4:Count>4</q4:Count>
-                            <q4:Skip>1</q4:Skip>
+                          <Combinator xsi:type="q5:Buffer">
+                            <q5:Count>4</q5:Count>
+                            <q5:Skip>1</q5:Skip>
                           </Combinator>
                         </Expression>
                         <Expression xsi:type="WorkflowInput">
@@ -5135,17 +5179,17 @@ Item5 as Id
                         </Expression>
                         <Expression xsi:type="WorkflowOutput" />
                         <Expression xsi:type="Combinator">
-                          <Combinator xsi:type="q4:SelectChannels">
-                            <q4:Channels>
-                              <q4:int>1</q4:int>
-                            </q4:Channels>
+                          <Combinator xsi:type="q5:SelectChannels">
+                            <q5:Channels>
+                              <q5:int>1</q5:int>
+                            </q5:Channels>
                           </Combinator>
                         </Expression>
                         <Expression xsi:type="Combinator">
-                          <Combinator xsi:type="q4:SelectChannels">
-                            <q4:Channels>
-                              <q4:int>2</q4:int>
-                            </q4:Channels>
+                          <Combinator xsi:type="q5:SelectChannels">
+                            <q5:Channels>
+                              <q5:int>2</q5:int>
+                            </q5:Channels>
                           </Combinator>
                         </Expression>
                         <Expression xsi:type="q2:ExpressionTransform">
@@ -5155,7 +5199,7 @@ Item5 as Id
                           <Selector>Source.Val0</Selector>
                         </Expression>
                         <Expression xsi:type="Combinator">
-                          <Combinator xsi:type="q4:Average" />
+                          <Combinator xsi:type="q5:Average" />
                         </Expression>
                         <Expression xsi:type="q2:ExpressionTransform">
                           <q2:Expression>single(it)</q2:Expression>
@@ -5164,7 +5208,7 @@ Item5 as Id
                           <Selector>Source.Val0</Selector>
                         </Expression>
                         <Expression xsi:type="Combinator">
-                          <Combinator xsi:type="q4:Average" />
+                          <Combinator xsi:type="q5:Average" />
                         </Expression>
                         <Expression xsi:type="Combinator">
                           <Combinator xsi:type="Zip" />
@@ -5263,38 +5307,38 @@ Item5 as Id
                     <Selector>Source.Id</Selector>
                   </Expression>
                   <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="q4:SelectChannels">
-                      <q4:Channels>
-                        <q4:int>3</q4:int>
-                        <q4:int>4</q4:int>
-                        <q4:int>5</q4:int>
-                      </q4:Channels>
+                    <Combinator xsi:type="q5:SelectChannels">
+                      <q5:Channels>
+                        <q5:int>3</q5:int>
+                        <q5:int>4</q5:int>
+                        <q5:int>5</q5:int>
+                      </q5:Channels>
                     </Combinator>
                   </Expression>
                   <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="q4:SelectChannels">
-                      <q4:Channels>
-                        <q4:int>6</q4:int>
-                        <q4:int>7</q4:int>
-                        <q4:int>8</q4:int>
-                      </q4:Channels>
+                    <Combinator xsi:type="q5:SelectChannels">
+                      <q5:Channels>
+                        <q5:int>6</q5:int>
+                        <q5:int>7</q5:int>
+                        <q5:int>8</q5:int>
+                      </q5:Channels>
                     </Combinator>
                   </Expression>
                   <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="q4:Rescale">
-                      <q4:Min>2000</q4:Min>
-                      <q4:Max>-2000</q4:Max>
-                      <q4:RangeMin>0</q4:RangeMin>
-                      <q4:RangeMax>1</q4:RangeMax>
+                    <Combinator xsi:type="q5:Rescale">
+                      <q5:Min>2000</q5:Min>
+                      <q5:Max>-2000</q5:Max>
+                      <q5:RangeMin>0</q5:RangeMin>
+                      <q5:RangeMax>1</q5:RangeMax>
                     </Combinator>
                   </Expression>
                   <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="q4:SelectChannels">
-                      <q4:Channels>
-                        <q4:int>0</q4:int>
-                        <q4:int>1</q4:int>
-                        <q4:int>2</q4:int>
-                      </q4:Channels>
+                    <Combinator xsi:type="q5:SelectChannels">
+                      <q5:Channels>
+                        <q5:int>0</q5:int>
+                        <q5:int>1</q5:int>
+                        <q5:int>2</q5:int>
+                      </q5:Channels>
                     </Combinator>
                   </Expression>
                   <Expression xsi:type="MemberSelector">
@@ -5312,9 +5356,9 @@ Item5 as Id
                       <Nodes>
                         <Expression xsi:type="Combinator">
                           <Combinator xsi:type="q1:CreateVector3">
-                            <q1:X>2.49954176</q1:X>
-                            <q1:Y>2.49566674</q1:Y>
-                            <q1:Z>2.49962521</q1:Z>
+                            <q1:X>2.49941683</q1:X>
+                            <q1:Y>2.497375</q1:Y>
+                            <q1:Z>2.50045824</q1:Z>
                           </Combinator>
                         </Expression>
                         <Expression xsi:type="InputMapping">
@@ -5354,9 +5398,9 @@ Item5 as Id
                       <Nodes>
                         <Expression xsi:type="Combinator">
                           <Combinator xsi:type="q1:CreateVector3">
-                            <q1:X>-0.0024998188</q1:X>
-                            <q1:Y>0.05374968</q1:Y>
-                            <q1:Z>2.92000055</q1:Z>
+                            <q1:X>0.0824993849</q1:X>
+                            <q1:Y>0.139999986</q1:Y>
+                            <q1:Z>2.97500014</q1:Z>
                           </Combinator>
                         </Expression>
                         <Expression xsi:type="InputMapping">
@@ -5396,9 +5440,9 @@ Item5 as Id
                       <Nodes>
                         <Expression xsi:type="Combinator">
                           <Combinator xsi:type="q1:CreateVector3">
-                            <q1:X>1.09875</q1:X>
-                            <q1:Y>0.70652777</q1:Y>
-                            <q1:Z>0.274027765</q1:Z>
+                            <q1:X>0.239861071</q1:X>
+                            <q1:Y>1.26611114</q1:Y>
+                            <q1:Z>-0.615</q1:Z>
                           </Combinator>
                         </Expression>
                         <Expression xsi:type="InputMapping">
@@ -5546,27 +5590,27 @@ Item5 as Id
                           <Selector>Source.Item3</Selector>
                         </Expression>
                         <Expression xsi:type="Combinator">
-                          <Combinator xsi:type="q4:Rescale">
-                            <q4:Min>0</q4:Min>
-                            <q4:Max>1</q4:Max>
-                            <q4:RangeMin>-0.05</q4:RangeMin>
-                            <q4:RangeMax>0.05</q4:RangeMax>
+                          <Combinator xsi:type="q5:Rescale">
+                            <q5:Min>0</q5:Min>
+                            <q5:Max>1</q5:Max>
+                            <q5:RangeMin>-0.05</q5:RangeMin>
+                            <q5:RangeMax>0.05</q5:RangeMax>
                           </Combinator>
                         </Expression>
                         <Expression xsi:type="Combinator">
-                          <Combinator xsi:type="q4:Rescale">
-                            <q4:Min>0</q4:Min>
-                            <q4:Max>1</q4:Max>
-                            <q4:RangeMin>-0.05</q4:RangeMin>
-                            <q4:RangeMax>0.05</q4:RangeMax>
+                          <Combinator xsi:type="q5:Rescale">
+                            <q5:Min>0</q5:Min>
+                            <q5:Max>1</q5:Max>
+                            <q5:RangeMin>-0.05</q5:RangeMin>
+                            <q5:RangeMax>0.05</q5:RangeMax>
                           </Combinator>
                         </Expression>
                         <Expression xsi:type="Combinator">
-                          <Combinator xsi:type="q4:Rescale">
-                            <q4:Min>0</q4:Min>
-                            <q4:Max>1</q4:Max>
-                            <q4:RangeMin>-0.05</q4:RangeMin>
-                            <q4:RangeMax>0.05</q4:RangeMax>
+                          <Combinator xsi:type="q5:Rescale">
+                            <q5:Min>0</q5:Min>
+                            <q5:Max>1</q5:Max>
+                            <q5:RangeMin>-0.05</q5:RangeMin>
+                            <q5:RangeMax>0.05</q5:RangeMax>
                           </Combinator>
                         </Expression>
                         <Expression xsi:type="ExternalizedPropertyOfDoubleRescale">
@@ -5697,9 +5741,9 @@ Item5 as Id
                       <Nodes>
                         <Expression xsi:type="Combinator">
                           <Combinator xsi:type="q1:CreateVector3">
-                            <q1:X>-9.167195E-06</q1:X>
-                            <q1:Y>-8.666515E-05</q1:Y>
-                            <q1:Z>-7.49826449E-06</q1:Z>
+                            <q1:X>-1.16646288E-05</q1:X>
+                            <q1:Y>-5.249977E-05</q1:Y>
+                            <q1:Z>9.167195E-06</q1:Z>
                           </Combinator>
                         </Expression>
                         <Expression xsi:type="InputMapping">
@@ -6031,11 +6075,14 @@ Item5 as Id
     <Type>Bonsai.Reactive.Zip, Bonsai.Core, Version=2.2.0.0, Culture=neutral, PublicKeyToken=null</Type>
     <Type>Bonsai.Shaders.CreateRotationY, Bonsai.Shaders, Version=0.10.0.0, Culture=neutral, PublicKeyToken=null</Type>
     <Type>Bonsai.Expressions.DoubleProperty, Bonsai.Core, Version=2.2.0.0, Culture=neutral, PublicKeyToken=null</Type>
+    <Type>Bonsai.Expressions.ExternalizedProperty`2[[System.Double, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089],[Bonsai.Expressions.MultiplyBuilder, Bonsai.Core, Version=2.2.0.0, Culture=neutral, PublicKeyToken=null]], Bonsai.Core, Version=2.2.0.0, Culture=neutral, PublicKeyToken=null</Type>
+    <Type>Bonsai.Shaders.Input.KeyDown, Bonsai.Shaders, Version=0.10.0.0, Culture=neutral, PublicKeyToken=null</Type>
+    <Type>Bonsai.Expressions.EqualBuilder, Bonsai.Core, Version=2.2.0.0, Culture=neutral, PublicKeyToken=null</Type>
+    <Type>Bonsai.Expressions.WorkflowProperty`1[[OpenTK.Input.Key, OpenTK, Version=1.1.0.0, Culture=neutral, PublicKeyToken=bad199fe84eb3df4]], Bonsai.Core, Version=2.2.0.0, Culture=neutral, PublicKeyToken=null</Type>
     <Type>Bonsai.Reactive.GroupByBuilder, Bonsai.Core, Version=2.2.0.0, Culture=neutral, PublicKeyToken=null</Type>
     <Type>Bonsai.Shaders.WindowClosed, Bonsai.Shaders, Version=0.10.0.0, Culture=neutral, PublicKeyToken=null</Type>
     <Type>Bonsai.Dsp.Rescale, Bonsai.Dsp, Version=2.2.0.0, Culture=neutral, PublicKeyToken=null</Type>
     <Type>Bonsai.Expressions.ExternalizedProperty`2[[System.Double, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089],[Bonsai.Dsp.Rescale, Bonsai.Dsp, Version=2.2.0.0, Culture=neutral, PublicKeyToken=null]], Bonsai.Core, Version=2.2.0.0, Culture=neutral, PublicKeyToken=null</Type>
-    <Type>Bonsai.Expressions.EqualBuilder, Bonsai.Core, Version=2.2.0.0, Culture=neutral, PublicKeyToken=null</Type>
     <Type>Bonsai.Expressions.IntProperty, Bonsai.Core, Version=2.2.0.0, Culture=neutral, PublicKeyToken=null</Type>
     <Type>Bonsai.Shaders.UpdateUniform, Bonsai.Shaders, Version=0.10.0.0, Culture=neutral, PublicKeyToken=null</Type>
     <Type>Bonsai.Shaders.DrawShader, Bonsai.Shaders, Version=0.10.0.0, Culture=neutral, PublicKeyToken=null</Type>
