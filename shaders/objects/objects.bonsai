@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <WorkflowBuilder Version="2.2.0">
-  <Workflow xmlns:q2="clr-namespace:Bonsai.Scripting;assembly=Bonsai.Scripting" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:q3="clr-namespace:Bonsai.ChampalimaudHardware;assembly=Bonsai.ChampalimaudHardware" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:q5="clr-namespace:Bonsai.Dsp;assembly=Bonsai.Dsp" xmlns:q4="clr-namespace:Bonsai.Shaders.Input;assembly=Bonsai.Shaders" xmlns:q1="clr-namespace:Bonsai.Shaders;assembly=Bonsai.Shaders" xmlns="https://horizongir.org/bonsai">
+  <Workflow xmlns:q2="clr-namespace:Bonsai.Scripting;assembly=Bonsai.Scripting" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:q3="clr-namespace:Bonsai.ChampalimaudHardware.Mesh;assembly=Bonsai.ChampalimaudHardware" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:q5="clr-namespace:Bonsai.Dsp;assembly=Bonsai.Dsp" xmlns:q4="clr-namespace:Bonsai.Shaders.Input;assembly=Bonsai.Shaders" xmlns:q1="clr-namespace:Bonsai.Shaders;assembly=Bonsai.Shaders" xmlns="https://horizongir.org/bonsai">
     <Nodes>
       <Expression xsi:type="Combinator">
         <Combinator xsi:type="q1:UpdateFrame" />
@@ -6065,7 +6065,7 @@ Item5 as Id
     <Type>Bonsai.Expressions.InputMappingBuilder, Bonsai.Core, Version=2.2.0.0, Culture=neutral, PublicKeyToken=null</Type>
     <Type>Bonsai.Reactive.AccumulateBuilder, Bonsai.Core, Version=2.2.0.0, Culture=neutral, PublicKeyToken=null</Type>
     <Type>Bonsai.Reactive.Timer, Bonsai.Core, Version=2.2.0.0, Culture=neutral, PublicKeyToken=null</Type>
-    <Type>Bonsai.ChampalimaudHardware.Tuna, Bonsai.ChampalimaudHardware, Version=0.2.0.0, Culture=neutral, PublicKeyToken=null</Type>
+    <Type>Bonsai.ChampalimaudHardware.Mesh.Tuna, Bonsai.ChampalimaudHardware, Version=0.2.0.0, Culture=neutral, PublicKeyToken=null</Type>
     <Type>Bonsai.Reactive.CombineLatest, Bonsai.Core, Version=2.2.0.0, Culture=neutral, PublicKeyToken=null</Type>
     <Type>Bonsai.Shaders.CreateLookAt, Bonsai.Shaders, Version=0.10.0.0, Culture=neutral, PublicKeyToken=null</Type>
     <Type>Bonsai.Shaders.CreatePerspectiveFieldOfView, Bonsai.Shaders, Version=0.10.0.0, Culture=neutral, PublicKeyToken=null</Type>
