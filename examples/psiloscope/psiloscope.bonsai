@@ -306,32 +306,32 @@ false as Active)</q3:Expression>
             <Expression xsi:type="ExternalizedPropertyOfDoubleRescale">
               <MemberName>Min</MemberName>
               <Name>MinAccel</Name>
-              <Value>0</Value>
+              <Value>-2000</Value>
             </Expression>
             <Expression xsi:type="ExternalizedPropertyOfDoubleRescale">
               <MemberName>Max</MemberName>
               <Name>MaxAccel</Name>
-              <Value>0</Value>
+              <Value>2000</Value>
             </Expression>
             <Expression xsi:type="ExternalizedPropertyOfDoubleRescale">
               <MemberName>Min</MemberName>
               <Name>MinGyro</Name>
-              <Value>0</Value>
+              <Value>-15000</Value>
             </Expression>
             <Expression xsi:type="ExternalizedPropertyOfDoubleRescale">
               <MemberName>Max</MemberName>
               <Name>MaxGyro</Name>
-              <Value>0</Value>
+              <Value>15000</Value>
             </Expression>
             <Expression xsi:type="ExternalizedPropertyOfDoubleRescale">
               <MemberName>Min</MemberName>
               <Name>MinMag</Name>
-              <Value>0</Value>
+              <Value>1300</Value>
             </Expression>
             <Expression xsi:type="ExternalizedPropertyOfDoubleRescale">
               <MemberName>Max</MemberName>
               <Name>MaxMag</Name>
-              <Value>0</Value>
+              <Value>500</Value>
             </Expression>
           </Nodes>
           <Edges>
