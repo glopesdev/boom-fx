@@ -189,12 +189,6 @@ def process(value):
       <Expression xsi:type="q4:ConvertToArray">
         <q4:Depth>F32</q4:Depth>
       </Expression>
-      <Expression xsi:type="Combinator">
-        <Combinator xsi:type="q5:Tuna">
-          <q5:Port>51002</q5:Port>
-          <q5:TunaPort>51003</q5:TunaPort>
-        </Combinator>
-      </Expression>
       <Expression xsi:type="GroupBy">
         <KeySelector>Source.Id</KeySelector>
       </Expression>
@@ -223,16 +217,16 @@ def process(value):
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="q4:Rescale">
-                <q4:Min>0</q4:Min>
-                <q4:Max>0</q4:Max>
+                <q4:Min>-2000</q4:Min>
+                <q4:Max>2000</q4:Max>
                 <q4:RangeMin>0</q4:RangeMin>
                 <q4:RangeMax>1</q4:RangeMax>
               </Combinator>
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="q4:Rescale">
-                <q4:Min>0</q4:Min>
-                <q4:Max>0</q4:Max>
+                <q4:Min>-15000</q4:Min>
+                <q4:Max>15000</q4:Max>
                 <q4:RangeMin>0</q4:RangeMin>
                 <q4:RangeMax>1</q4:RangeMax>
               </Combinator>
@@ -248,8 +242,8 @@ def process(value):
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="q4:Rescale">
-                <q4:Min>0</q4:Min>
-                <q4:Max>0</q4:Max>
+                <q4:Min>1300</q4:Min>
+                <q4:Max>500</q4:Max>
                 <q4:RangeMin>0</q4:RangeMin>
                 <q4:RangeMax>1</q4:RangeMax>
               </Combinator>
@@ -501,7 +495,8 @@ def process(value):
       row = len(idRows)
       idRows[value.Id] = row
       newData = Mat((row+1)*data.Rows,1,Depth.F32,1)
-      CV.Copy(tunaData,newData.GetRows(0,row*data.Rows,1))
+      if tunaData is not None:
+        CV.Copy(tunaData,newData.GetRows(0,row*data.Rows,1))
       tunaData = newData
 
     rowoffset = row * data.Rows
@@ -512,6 +507,19 @@ def unload():
   global idRows, tunaData
   idRows = None
   tunaData = None</q3:Script>
+      </Expression>
+      <Expression xsi:type="Combinator">
+        <Combinator xsi:type="q5:Tuna">
+          <q5:Port>51002</q5:Port>
+          <q5:TunaPort>51003</q5:TunaPort>
+        </Combinator>
+      </Expression>
+      <Expression xsi:type="Combinator">
+        <Combinator xsi:type="q4:ConvertScale">
+          <q4:Depth xsi:nil="true" />
+          <q4:Scale>1</q4:Scale>
+          <q4:Shift>0</q4:Shift>
+        </Combinator>
       </Expression>
       <Expression xsi:type="Sink">
         <Name>TunaWriter</Name>
@@ -728,11 +736,6 @@ def unload():
         <Label>Source1</Label>
       </Edge>
       <Edge>
-        <From>26</From>
-        <To>30</To>
-        <Label>Source1</Label>
-      </Edge>
-      <Edge>
         <From>27</From>
         <To>28</To>
         <Label>Source2</Label>
@@ -759,7 +762,7 @@ def unload():
       </Edge>
       <Edge>
         <From>31</From>
-        <To>35</To>
+        <To>32</To>
         <Label>Source1</Label>
       </Edge>
       <Edge>
@@ -769,12 +772,22 @@ def unload():
       </Edge>
       <Edge>
         <From>33</From>
-        <To>34</To>
+        <To>35</To>
+        <Label>Source1</Label>
+      </Edge>
+      <Edge>
+        <From>34</From>
+        <To>36</To>
         <Label>Source1</Label>
       </Edge>
       <Edge>
         <From>35</From>
-        <To>32</To>
+        <To>30</To>
+        <Label>Source1</Label>
+      </Edge>
+      <Edge>
+        <From>36</From>
+        <To>31</To>
         <Label>Source1</Label>
       </Edge>
     </Edges>
@@ -798,7 +811,6 @@ def unload():
     <Type>Bonsai.Dsp.Tile, Bonsai.Dsp, Version=2.2.0.0, Culture=neutral, PublicKeyToken=null</Type>
     <Type>Bonsai.Reactive.Sample, Bonsai.Core, Version=2.3.0.0, Culture=neutral, PublicKeyToken=null</Type>
     <Type>Bonsai.Dsp.ConvertToArray, Bonsai.Dsp, Version=2.2.0.0, Culture=neutral, PublicKeyToken=null</Type>
-    <Type>Bonsai.ChampalimaudHardware.Mesh.Tuna, Bonsai.ChampalimaudHardware, Version=0.4.0.0, Culture=neutral, PublicKeyToken=null</Type>
     <Type>Bonsai.Reactive.GroupByBuilder, Bonsai.Core, Version=2.3.0.0, Culture=neutral, PublicKeyToken=null</Type>
     <Type>Bonsai.Reactive.Merge, Bonsai.Core, Version=2.3.0.0, Culture=neutral, PublicKeyToken=null</Type>
     <Type>Bonsai.Dsp.SelectChannels, Bonsai.Dsp, Version=2.2.0.0, Culture=neutral, PublicKeyToken=null</Type>
@@ -807,6 +819,8 @@ def unload():
     <Type>Bonsai.Dsp.Reduce, Bonsai.Dsp, Version=2.2.0.0, Culture=neutral, PublicKeyToken=null</Type>
     <Type>Bonsai.Reactive.Throttle, Bonsai.Core, Version=2.3.0.0, Culture=neutral, PublicKeyToken=null</Type>
     <Type>Bonsai.Expressions.ExternalizedProperty`2[[System.Double, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089],[Bonsai.Dsp.Rescale, Bonsai.Dsp, Version=2.2.0.0, Culture=neutral, PublicKeyToken=null]], Bonsai.Core, Version=2.3.0.0, Culture=neutral, PublicKeyToken=null</Type>
+    <Type>Bonsai.ChampalimaudHardware.Mesh.Tuna, Bonsai.ChampalimaudHardware, Version=0.4.0.0, Culture=neutral, PublicKeyToken=null</Type>
+    <Type>Bonsai.Dsp.ConvertScale, Bonsai.Dsp, Version=2.2.0.0, Culture=neutral, PublicKeyToken=null</Type>
     <Type>Bonsai.Dsp.MatrixWriter, Bonsai.Dsp, Version=2.2.0.0, Culture=neutral, PublicKeyToken=null</Type>
     <Type>Bonsai.Dsp.Submatrix, Bonsai.Dsp, Version=2.2.0.0, Culture=neutral, PublicKeyToken=null</Type>
     <Type>Bonsai.Dsp.ConvertFromArray, Bonsai.Dsp, Version=2.2.0.0, Culture=neutral, PublicKeyToken=null</Type>
