@@ -1,0 +1,756 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<WorkflowBuilder Version="2.3.0-alpha1">
+  <Workflow xmlns:q2="clr-namespace:Bonsai.Windows.Input;assembly=Bonsai.Windows.Input" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:q3="clr-namespace:Bonsai.Scripting;assembly=Bonsai.Scripting" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:q5="clr-namespace:Bonsai.ChampalimaudHardware.Mesh;assembly=Bonsai.ChampalimaudHardware" xmlns:q4="clr-namespace:Bonsai.Dsp;assembly=Bonsai.Dsp" xmlns:q1="clr-namespace:Bonsai.Shaders;assembly=Bonsai.Shaders" xmlns="https://horizongir.org/bonsai">
+    <Nodes>
+      <Expression xsi:type="Combinator">
+        <Combinator xsi:type="q1:UpdateFrame" />
+      </Expression>
+      <Expression xsi:type="Combinator">
+        <Combinator xsi:type="q1:CreatePerspectiveFieldOfView">
+          <q1:FovY>0.785398</q1:FovY>
+          <q1:AspectRatio>1.33333337</q1:AspectRatio>
+          <q1:NearClip>0.1</q1:NearClip>
+          <q1:FarClip>10000</q1:FarClip>
+        </Combinator>
+      </Expression>
+      <Expression xsi:type="Combinator">
+        <Combinator xsi:type="q1:CreateLookAt">
+          <q1:Eye>
+            <q1:X>-40</q1:X>
+            <q1:Y>750</q1:Y>
+            <q1:Z>-3000</q1:Z>
+          </q1:Eye>
+          <q1:Target>
+            <q1:X>-40</q1:X>
+            <q1:Y>750</q1:Y>
+            <q1:Z>180</q1:Z>
+          </q1:Target>
+          <q1:Up>
+            <q1:X>0</q1:X>
+            <q1:Y>1</q1:Y>
+            <q1:Z>0</q1:Z>
+          </q1:Up>
+        </Combinator>
+      </Expression>
+      <Expression xsi:type="Combinator">
+        <Combinator xsi:type="q1:CreateTranslation">
+          <q1:X>0</q1:X>
+          <q1:Y>0</q1:Y>
+          <q1:Z>0</q1:Z>
+        </Combinator>
+      </Expression>
+      <Expression xsi:type="Combinator">
+        <Combinator xsi:type="Zip" />
+      </Expression>
+      <Expression xsi:type="Multiply" />
+      <Expression xsi:type="Combinator">
+        <Combinator xsi:type="Zip" />
+      </Expression>
+      <Expression xsi:type="ReplaySubject">
+        <Name>ModelView</Name>
+        <BufferSize>1</BufferSize>
+      </Expression>
+      <Expression xsi:type="Multiply" />
+      <Expression xsi:type="ReplaySubject">
+        <Name>ModelViewProjection</Name>
+        <BufferSize>1</BufferSize>
+      </Expression>
+      <Expression xsi:type="Combinator">
+        <Combinator xsi:type="CombineLatest" />
+      </Expression>
+      <Expression xsi:type="SubscribeSubject">
+        <Name>ModelView</Name>
+      </Expression>
+      <Expression xsi:type="MemberSelector">
+        <Selector>Source.Item2</Selector>
+      </Expression>
+      <Expression xsi:type="Combinator">
+        <Combinator xsi:type="q1:UpdateUniform">
+          <q1:UniformName>mv</q1:UniformName>
+          <q1:ShaderName>Render</q1:ShaderName>
+        </Combinator>
+      </Expression>
+      <Expression xsi:type="Combinator">
+        <Combinator xsi:type="CombineLatest" />
+      </Expression>
+      <Expression xsi:type="SubscribeSubject">
+        <Name>ModelViewProjection</Name>
+      </Expression>
+      <Expression xsi:type="MemberSelector">
+        <Selector>Source.Item2</Selector>
+      </Expression>
+      <Expression xsi:type="Combinator">
+        <Combinator xsi:type="q1:UpdateUniform">
+          <q1:UniformName>mvp</q1:UniformName>
+          <q1:ShaderName>Render</q1:ShaderName>
+        </Combinator>
+      </Expression>
+      <Expression xsi:type="Combinator">
+        <Combinator xsi:type="q2:MouseMove" />
+      </Expression>
+      <Expression xsi:type="MemberSelector">
+        <Selector>Source.X</Selector>
+      </Expression>
+      <Expression xsi:type="q3:PythonTransform">
+        <q3:Script>import clr
+clr.AddReference("OpenTK")
+from OpenTK import Vector3,Matrix3
+from System import Array, Single
+
+vertsPerFace = 4
+dataPerVertex = 9
+meshname = "Wireframe"
+
+@returns(Array[Matrix3])
+def process(value):
+  data = value.Item1
+  mesh = value.Item2.Sender.Meshes[meshname]
+
+  if len(data) == 0:
+    return Array[Matrix3]([Matrix3.Zero for x in xrange(mesh.VertexCount)])
+
+  vertexData = []
+  for vertexId in xrange(mesh.VertexCount):
+    faceId = vertexId / vertsPerFace
+    dataOffset = faceId * dataPerVertex
+    vertexData.append(Matrix3(data[(dataOffset + 0) % len(data)],
+                              data[(dataOffset + 1) % len(data)],
+                              data[(dataOffset + 2) % len(data)],
+                              data[(dataOffset + 3) % len(data)],
+                              data[(dataOffset + 4) % len(data)],
+                              data[(dataOffset + 5) % len(data)],
+                              data[(dataOffset + 6) % len(data)],
+                              data[(dataOffset + 7) % len(data)],
+                              data[(dataOffset + 8) % len(data)]))
+  return Array[Matrix3](vertexData)</q3:Script>
+      </Expression>
+      <Expression xsi:type="Combinator">
+        <Combinator xsi:type="q1:UpdateVertexBuffer">
+          <q1:MeshName>DynamicFrame</q1:MeshName>
+          <q1:DrawMode>Quads</q1:DrawMode>
+          <q1:Usage>DynamicDraw</q1:Usage>
+          <q1:VertexAttributes>
+            <q1:VertexAttributeMapping>
+              <q1:Size>3</q1:Size>
+              <q1:Normalized>false</q1:Normalized>
+              <q1:Type>Float</q1:Type>
+            </q1:VertexAttributeMapping>
+            <q1:VertexAttributeMapping>
+              <q1:Size>3</q1:Size>
+              <q1:Normalized>false</q1:Normalized>
+              <q1:Type>Float</q1:Type>
+            </q1:VertexAttributeMapping>
+            <q1:VertexAttributeMapping>
+              <q1:Size>3</q1:Size>
+              <q1:Normalized>false</q1:Normalized>
+              <q1:Type>Float</q1:Type>
+            </q1:VertexAttributeMapping>
+          </q1:VertexAttributes>
+        </Combinator>
+      </Expression>
+      <Expression xsi:type="Combinator">
+        <Combinator xsi:type="q1:DrawShaderAggregate">
+          <q1:ShaderName>Render</q1:ShaderName>
+          <q1:MeshNames>
+            <q1:MeshName>Wireframe</q1:MeshName>
+            <q1:MeshName>DynamicFrame</q1:MeshName>
+          </q1:MeshNames>
+        </Combinator>
+      </Expression>
+      <Expression xsi:type="Multiply">
+        <Operand xsi:type="FloatProperty">
+          <Value>0.01</Value>
+        </Operand>
+      </Expression>
+      <Expression xsi:type="q3:ExpressionTransform">
+        <q3:Expression>single(it)</q3:Expression>
+      </Expression>
+      <Expression xsi:type="Combinator">
+        <Combinator xsi:type="q4:Buffer">
+          <q4:Count>1</q4:Count>
+          <q4:Skip xsi:nil="true" />
+        </Combinator>
+      </Expression>
+      <Expression xsi:type="Combinator">
+        <Combinator xsi:type="q4:Tile">
+          <q4:RowTiles>40</q4:RowTiles>
+          <q4:ColumnTiles>1</q4:ColumnTiles>
+        </Combinator>
+      </Expression>
+      <Expression xsi:type="Combinator">
+        <Combinator xsi:type="q1:UpdateFrame" />
+      </Expression>
+      <Expression xsi:type="Combinator">
+        <Combinator xsi:type="CombineLatest" />
+      </Expression>
+      <Expression xsi:type="Combinator">
+        <Combinator xsi:type="Sample" />
+      </Expression>
+      <Expression xsi:type="q4:ConvertToArray">
+        <q4:Depth>F32</q4:Depth>
+      </Expression>
+      <Expression xsi:type="Combinator">
+        <Combinator xsi:type="q4:Buffer">
+          <q4:Count>80</q4:Count>
+          <q4:Skip xsi:nil="true" />
+        </Combinator>
+      </Expression>
+      <Expression xsi:type="GroupBy">
+        <KeySelector>Source.Id</KeySelector>
+      </Expression>
+      <Expression xsi:type="SelectMany">
+        <Name>RescaleAndFilter</Name>
+        <Workflow>
+          <Nodes>
+            <Expression xsi:type="WorkflowInput">
+              <Name>Source1</Name>
+            </Expression>
+            <Expression xsi:type="WorkflowOutput" />
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="Merge" />
+            </Expression>
+            <Expression xsi:type="MemberSelector">
+              <Selector>Source.Data</Selector>
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="q4:SelectChannels">
+                <q4:Channels>
+                  <q4:int>0</q4:int>
+                  <q4:int>1</q4:int>
+                  <q4:int>2</q4:int>
+                </q4:Channels>
+              </Combinator>
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="q4:Rescale">
+                <q4:Min>-2000</q4:Min>
+                <q4:Max>2000</q4:Max>
+                <q4:RangeMin>0</q4:RangeMin>
+                <q4:RangeMax>1</q4:RangeMax>
+              </Combinator>
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="q4:Rescale">
+                <q4:Min>-15000</q4:Min>
+                <q4:Max>15000</q4:Max>
+                <q4:RangeMin>0</q4:RangeMin>
+                <q4:RangeMax>1</q4:RangeMax>
+              </Combinator>
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="q4:SelectChannels">
+                <q4:Channels>
+                  <q4:int>3</q4:int>
+                  <q4:int>4</q4:int>
+                  <q4:int>5</q4:int>
+                </q4:Channels>
+              </Combinator>
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="q4:Rescale">
+                <q4:Min>1300</q4:Min>
+                <q4:Max>500</q4:Max>
+                <q4:RangeMin>0</q4:RangeMin>
+                <q4:RangeMax>1</q4:RangeMax>
+              </Combinator>
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="q4:SelectChannels">
+                <q4:Channels>
+                  <q4:int>6</q4:int>
+                  <q4:int>7</q4:int>
+                  <q4:int>8</q4:int>
+                </q4:Channels>
+              </Combinator>
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="Zip" />
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="q4:Concat">
+                <q4:Axis>0</q4:Axis>
+              </Combinator>
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="q4:Reduce">
+                <q4:Axis>1</q4:Axis>
+                <q4:Operation>Avg</q4:Operation>
+              </Combinator>
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="CombineLatest" />
+            </Expression>
+            <Expression xsi:type="MemberSelector">
+              <Selector>Source.Key</Selector>
+            </Expression>
+            <Expression xsi:type="q3:ExpressionTransform">
+              <q3:Expression>new(
+Item2 as Id,
+Item1 as Data,
+true as Active)</q3:Expression>
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="Merge" />
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="Throttle">
+                <DueTime>PT10S</DueTime>
+              </Combinator>
+            </Expression>
+            <Expression xsi:type="q3:ExpressionTransform">
+              <q3:Expression>new(
+Id as Id,
+Data as Data,
+false as Active)</q3:Expression>
+            </Expression>
+            <Expression xsi:type="ExternalizedPropertyOfDoubleRescale">
+              <MemberName>Min</MemberName>
+              <Name>MinAccel</Name>
+              <Value>-2000</Value>
+            </Expression>
+            <Expression xsi:type="ExternalizedPropertyOfDoubleRescale">
+              <MemberName>Max</MemberName>
+              <Name>MaxAccel</Name>
+              <Value>2000</Value>
+            </Expression>
+            <Expression xsi:type="ExternalizedPropertyOfDoubleRescale">
+              <MemberName>Min</MemberName>
+              <Name>MinGyro</Name>
+              <Value>-15000</Value>
+            </Expression>
+            <Expression xsi:type="ExternalizedPropertyOfDoubleRescale">
+              <MemberName>Max</MemberName>
+              <Name>MaxGyro</Name>
+              <Value>15000</Value>
+            </Expression>
+            <Expression xsi:type="ExternalizedPropertyOfDoubleRescale">
+              <MemberName>Min</MemberName>
+              <Name>MinMag</Name>
+              <Value>1300</Value>
+            </Expression>
+            <Expression xsi:type="ExternalizedPropertyOfDoubleRescale">
+              <MemberName>Max</MemberName>
+              <Name>MaxMag</Name>
+              <Value>500</Value>
+            </Expression>
+          </Nodes>
+          <Edges>
+            <Edge>
+              <From>0</From>
+              <To>2</To>
+              <Label>Source1</Label>
+            </Edge>
+            <Edge>
+              <From>0</From>
+              <To>14</To>
+              <Label>Source1</Label>
+            </Edge>
+            <Edge>
+              <From>2</From>
+              <To>3</To>
+              <Label>Source1</Label>
+            </Edge>
+            <Edge>
+              <From>3</From>
+              <To>4</To>
+              <Label>Source1</Label>
+            </Edge>
+            <Edge>
+              <From>3</From>
+              <To>7</To>
+              <Label>Source1</Label>
+            </Edge>
+            <Edge>
+              <From>3</From>
+              <To>9</To>
+              <Label>Source1</Label>
+            </Edge>
+            <Edge>
+              <From>4</From>
+              <To>5</To>
+              <Label>Source1</Label>
+            </Edge>
+            <Edge>
+              <From>5</From>
+              <To>10</To>
+              <Label>Source1</Label>
+            </Edge>
+            <Edge>
+              <From>6</From>
+              <To>10</To>
+              <Label>Source2</Label>
+            </Edge>
+            <Edge>
+              <From>7</From>
+              <To>6</To>
+              <Label>Source1</Label>
+            </Edge>
+            <Edge>
+              <From>8</From>
+              <To>10</To>
+              <Label>Source3</Label>
+            </Edge>
+            <Edge>
+              <From>9</From>
+              <To>8</To>
+              <Label>Source1</Label>
+            </Edge>
+            <Edge>
+              <From>10</From>
+              <To>11</To>
+              <Label>Source1</Label>
+            </Edge>
+            <Edge>
+              <From>11</From>
+              <To>12</To>
+              <Label>Source1</Label>
+            </Edge>
+            <Edge>
+              <From>12</From>
+              <To>13</To>
+              <Label>Source1</Label>
+            </Edge>
+            <Edge>
+              <From>13</From>
+              <To>15</To>
+              <Label>Source1</Label>
+            </Edge>
+            <Edge>
+              <From>14</From>
+              <To>13</To>
+              <Label>Source2</Label>
+            </Edge>
+            <Edge>
+              <From>15</From>
+              <To>16</To>
+              <Label>Source1</Label>
+            </Edge>
+            <Edge>
+              <From>15</From>
+              <To>17</To>
+              <Label>Source1</Label>
+            </Edge>
+            <Edge>
+              <From>16</From>
+              <To>1</To>
+              <Label>Source1</Label>
+            </Edge>
+            <Edge>
+              <From>17</From>
+              <To>18</To>
+              <Label>Source1</Label>
+            </Edge>
+            <Edge>
+              <From>18</From>
+              <To>16</To>
+              <Label>Source2</Label>
+            </Edge>
+            <Edge>
+              <From>19</From>
+              <To>5</To>
+              <Label>Source2</Label>
+            </Edge>
+            <Edge>
+              <From>20</From>
+              <To>5</To>
+              <Label>Source3</Label>
+            </Edge>
+            <Edge>
+              <From>21</From>
+              <To>6</To>
+              <Label>Source2</Label>
+            </Edge>
+            <Edge>
+              <From>22</From>
+              <To>6</To>
+              <Label>Source3</Label>
+            </Edge>
+            <Edge>
+              <From>23</From>
+              <To>8</To>
+              <Label>Source2</Label>
+            </Edge>
+            <Edge>
+              <From>24</From>
+              <To>8</To>
+              <Label>Source3</Label>
+            </Edge>
+          </Edges>
+        </Workflow>
+      </Expression>
+      <Expression xsi:type="q3:PythonTransform">
+        <q3:Script>import clr
+clr.AddReference("OpenCV.Net")
+from OpenCV.Net import *
+
+idRows = None
+tunaData = None
+
+def load():
+  global idRows, tunaData
+  idRows = {}
+  tunaData = None
+
+@returns(Mat)
+def process(value):
+  global tunaData
+  data = value.Data
+  if value.Active:
+    row = idRows.get(value.Id)
+    if row is None:
+      row = len(idRows)
+      idRows[value.Id] = row
+      newData = Mat((row+1)*data.Rows,1,Depth.F32,1)
+      if tunaData is not None:
+        CV.Copy(tunaData,newData.GetRows(0,row*data.Rows,1))
+      tunaData = newData
+
+    rowoffset = row * data.Rows
+    CV.Copy(value.Data,tunaData.GetRows(rowoffset,rowoffset+data.Rows,1))
+  return tunaData
+
+def unload():
+  global idRows, tunaData
+  idRows = None
+  tunaData = None</q3:Script>
+      </Expression>
+      <Expression xsi:type="Combinator">
+        <Combinator xsi:type="q4:MatrixReader">
+          <q4:FileName>tuna2016-06-14T19_56_00.bin</q4:FileName>
+          <q4:Offset>0</q4:Offset>
+          <q4:Frequency>32000</q4:Frequency>
+          <q4:ChannelCount>1</q4:ChannelCount>
+          <q4:BufferLength>800</q4:BufferLength>
+          <q4:Depth>U8</q4:Depth>
+          <q4:Layout>RowMajor</q4:Layout>
+        </Combinator>
+      </Expression>
+      <Expression xsi:type="q4:ConvertToArray">
+        <q4:Depth xsi:nil="true" />
+      </Expression>
+      <Expression xsi:type="Combinator">
+        <Combinator xsi:type="q4:ConvertScale">
+          <q4:Depth xsi:nil="true" />
+          <q4:Scale>500</q4:Scale>
+          <q4:Shift>0</q4:Shift>
+        </Combinator>
+      </Expression>
+      <Expression xsi:type="Combinator">
+        <Combinator xsi:type="q5:TunaFromArray" />
+      </Expression>
+    </Nodes>
+    <Edges>
+      <Edge>
+        <From>0</From>
+        <To>10</To>
+        <Label>Source1</Label>
+      </Edge>
+      <Edge>
+        <From>1</From>
+        <To>6</To>
+        <Label>Source2</Label>
+      </Edge>
+      <Edge>
+        <From>2</From>
+        <To>4</To>
+        <Label>Source2</Label>
+      </Edge>
+      <Edge>
+        <From>3</From>
+        <To>4</To>
+        <Label>Source1</Label>
+      </Edge>
+      <Edge>
+        <From>4</From>
+        <To>5</To>
+        <Label>Source1</Label>
+      </Edge>
+      <Edge>
+        <From>5</From>
+        <To>7</To>
+        <Label>Source1</Label>
+      </Edge>
+      <Edge>
+        <From>6</From>
+        <To>8</To>
+        <Label>Source1</Label>
+      </Edge>
+      <Edge>
+        <From>7</From>
+        <To>6</To>
+        <Label>Source1</Label>
+      </Edge>
+      <Edge>
+        <From>8</From>
+        <To>9</To>
+        <Label>Source1</Label>
+      </Edge>
+      <Edge>
+        <From>10</From>
+        <To>12</To>
+        <Label>Source1</Label>
+      </Edge>
+      <Edge>
+        <From>11</From>
+        <To>10</To>
+        <Label>Source2</Label>
+      </Edge>
+      <Edge>
+        <From>12</From>
+        <To>13</To>
+        <Label>Source1</Label>
+      </Edge>
+      <Edge>
+        <From>13</From>
+        <To>14</To>
+        <Label>Source1</Label>
+      </Edge>
+      <Edge>
+        <From>14</From>
+        <To>16</To>
+        <Label>Source1</Label>
+      </Edge>
+      <Edge>
+        <From>15</From>
+        <To>14</To>
+        <Label>Source2</Label>
+      </Edge>
+      <Edge>
+        <From>16</From>
+        <To>17</To>
+        <Label>Source1</Label>
+      </Edge>
+      <Edge>
+        <From>18</From>
+        <To>19</To>
+        <Label>Source1</Label>
+      </Edge>
+      <Edge>
+        <From>19</From>
+        <To>24</To>
+        <Label>Source1</Label>
+      </Edge>
+      <Edge>
+        <From>20</From>
+        <To>21</To>
+        <Label>Source1</Label>
+      </Edge>
+      <Edge>
+        <From>21</From>
+        <To>22</To>
+        <Label>Source1</Label>
+      </Edge>
+      <Edge>
+        <From>23</From>
+        <To>25</To>
+        <Label>Source1</Label>
+      </Edge>
+      <Edge>
+        <From>24</From>
+        <To>23</To>
+        <Label>Source1</Label>
+      </Edge>
+      <Edge>
+        <From>25</From>
+        <To>26</To>
+        <Label>Source1</Label>
+      </Edge>
+      <Edge>
+        <From>27</From>
+        <To>28</To>
+        <Label>Source2</Label>
+      </Edge>
+      <Edge>
+        <From>27</From>
+        <To>29</To>
+        <Label>Source2</Label>
+      </Edge>
+      <Edge>
+        <From>28</From>
+        <To>29</To>
+        <Label>Source1</Label>
+      </Edge>
+      <Edge>
+        <From>29</From>
+        <To>20</To>
+        <Label>Source1</Label>
+      </Edge>
+      <Edge>
+        <From>30</From>
+        <To>28</To>
+        <Label>Source1</Label>
+      </Edge>
+      <Edge>
+        <From>31</From>
+        <To>36</To>
+        <Label>Source1</Label>
+      </Edge>
+      <Edge>
+        <From>32</From>
+        <To>33</To>
+        <Label>Source1</Label>
+      </Edge>
+      <Edge>
+        <From>33</From>
+        <To>34</To>
+        <Label>Source1</Label>
+      </Edge>
+      <Edge>
+        <From>34</From>
+        <To>37</To>
+        <Label>Source1</Label>
+      </Edge>
+      <Edge>
+        <From>35</From>
+        <To>31</To>
+        <Label>Source1</Label>
+      </Edge>
+      <Edge>
+        <From>36</From>
+        <To>38</To>
+        <Label>Source1</Label>
+      </Edge>
+      <Edge>
+        <From>37</From>
+        <To>30</To>
+        <Label>Source1</Label>
+      </Edge>
+      <Edge>
+        <From>38</From>
+        <To>32</To>
+        <Label>Source1</Label>
+      </Edge>
+    </Edges>
+  </Workflow>
+  <ExtensionTypes>
+    <Type>Bonsai.Shaders.UpdateFrame, Bonsai.Shaders, Version=0.12.0.0, Culture=neutral, PublicKeyToken=null</Type>
+    <Type>Bonsai.Shaders.CreatePerspectiveFieldOfView, Bonsai.Shaders, Version=0.12.0.0, Culture=neutral, PublicKeyToken=null</Type>
+    <Type>Bonsai.Shaders.CreateLookAt, Bonsai.Shaders, Version=0.12.0.0, Culture=neutral, PublicKeyToken=null</Type>
+    <Type>Bonsai.Shaders.CreateTranslation, Bonsai.Shaders, Version=0.12.0.0, Culture=neutral, PublicKeyToken=null</Type>
+    <Type>Bonsai.Reactive.Zip, Bonsai.Core, Version=2.3.0.0, Culture=neutral, PublicKeyToken=null</Type>
+    <Type>Bonsai.Expressions.MultiplyBuilder, Bonsai.Core, Version=2.3.0.0, Culture=neutral, PublicKeyToken=null</Type>
+    <Type>Bonsai.Reactive.CombineLatest, Bonsai.Core, Version=2.3.0.0, Culture=neutral, PublicKeyToken=null</Type>
+    <Type>Bonsai.Shaders.UpdateUniform, Bonsai.Shaders, Version=0.12.0.0, Culture=neutral, PublicKeyToken=null</Type>
+    <Type>Bonsai.Windows.Input.MouseMove, Bonsai.Windows.Input, Version=2.2.0.0, Culture=neutral, PublicKeyToken=null</Type>
+    <Type>Bonsai.Scripting.PythonTransform, Bonsai.Scripting, Version=2.2.0.0, Culture=neutral, PublicKeyToken=null</Type>
+    <Type>Bonsai.Shaders.UpdateVertexBuffer, Bonsai.Shaders, Version=0.12.0.0, Culture=neutral, PublicKeyToken=null</Type>
+    <Type>Bonsai.Shaders.DrawShaderAggregate, Bonsai.Shaders, Version=0.12.0.0, Culture=neutral, PublicKeyToken=null</Type>
+    <Type>Bonsai.Expressions.FloatProperty, Bonsai.Core, Version=2.3.0.0, Culture=neutral, PublicKeyToken=null</Type>
+    <Type>Bonsai.Scripting.ExpressionTransform, Bonsai.Scripting, Version=2.2.0.0, Culture=neutral, PublicKeyToken=null</Type>
+    <Type>Bonsai.Dsp.Buffer, Bonsai.Dsp, Version=2.2.0.0, Culture=neutral, PublicKeyToken=null</Type>
+    <Type>Bonsai.Dsp.Tile, Bonsai.Dsp, Version=2.2.0.0, Culture=neutral, PublicKeyToken=null</Type>
+    <Type>Bonsai.Reactive.Sample, Bonsai.Core, Version=2.3.0.0, Culture=neutral, PublicKeyToken=null</Type>
+    <Type>Bonsai.Dsp.ConvertToArray, Bonsai.Dsp, Version=2.2.0.0, Culture=neutral, PublicKeyToken=null</Type>
+    <Type>Bonsai.Reactive.GroupByBuilder, Bonsai.Core, Version=2.3.0.0, Culture=neutral, PublicKeyToken=null</Type>
+    <Type>Bonsai.Reactive.Merge, Bonsai.Core, Version=2.3.0.0, Culture=neutral, PublicKeyToken=null</Type>
+    <Type>Bonsai.Dsp.SelectChannels, Bonsai.Dsp, Version=2.2.0.0, Culture=neutral, PublicKeyToken=null</Type>
+    <Type>Bonsai.Dsp.Rescale, Bonsai.Dsp, Version=2.2.0.0, Culture=neutral, PublicKeyToken=null</Type>
+    <Type>Bonsai.Dsp.Concat, Bonsai.Dsp, Version=2.2.0.0, Culture=neutral, PublicKeyToken=null</Type>
+    <Type>Bonsai.Dsp.Reduce, Bonsai.Dsp, Version=2.2.0.0, Culture=neutral, PublicKeyToken=null</Type>
+    <Type>Bonsai.Reactive.Throttle, Bonsai.Core, Version=2.3.0.0, Culture=neutral, PublicKeyToken=null</Type>
+    <Type>Bonsai.Expressions.ExternalizedProperty`2[[System.Double, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089],[Bonsai.Dsp.Rescale, Bonsai.Dsp, Version=2.2.0.0, Culture=neutral, PublicKeyToken=null]], Bonsai.Core, Version=2.3.0.0, Culture=neutral, PublicKeyToken=null</Type>
+    <Type>Bonsai.Dsp.MatrixReader, Bonsai.Dsp, Version=2.2.0.0, Culture=neutral, PublicKeyToken=null</Type>
+    <Type>Bonsai.Dsp.ConvertScale, Bonsai.Dsp, Version=2.2.0.0, Culture=neutral, PublicKeyToken=null</Type>
+    <Type>Bonsai.ChampalimaudHardware.Mesh.TunaFromArray, Bonsai.ChampalimaudHardware, Version=0.5.0.0, Culture=neutral, PublicKeyToken=null</Type>
+  </ExtensionTypes>
+</WorkflowBuilder>
