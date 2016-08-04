@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<WorkflowBuilder Version="2.3.0-alpha1">
+  <Workflow xmlns:q1="clr-namespace:Bonsai.Dsp;assembly=Bonsai.Dsp" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:q2="clr-namespace:Bonsai.Audio;assembly=Bonsai.Audio" xmlns="https://horizongir.org/bonsai">
+    <Nodes>
+      <Expression xsi:type="Combinator">
+        <Combinator xsi:type="q1:MatrixWriter">
+          <q1:Path>audio.bin</q1:Path>
+          <q1:Suffix>None</q1:Suffix>
+          <q1:Overwrite>true</q1:Overwrite>
+          <q1:Layout>ColumnMajor</q1:Layout>
+        </Combinator>
+      </Expression>
+      <Expression xsi:type="Combinator">
+        <Combinator xsi:type="q2:AudioCapture">
+          <q2:DeviceName>Microphone (Realtek High Defini</q2:DeviceName>
+          <q2:Frequency>44100</q2:Frequency>
+          <q2:SampleFormat>Stereo16</q2:SampleFormat>
+          <q2:BufferLength>10</q2:BufferLength>
+        </Combinator>
+      </Expression>
+    </Nodes>
+    <Edges>
+      <Edge>
+        <From>1</From>
+        <To>0</To>
+        <Label>Source1</Label>
+      </Edge>
+    </Edges>
+  </Workflow>
+  <ExtensionTypes>
+    <Type>Bonsai.Dsp.MatrixWriter, Bonsai.Dsp, Version=2.2.0.0, Culture=neutral, PublicKeyToken=null</Type>
+    <Type>Bonsai.Audio.AudioCapture, Bonsai.Audio, Version=2.3.0.0, Culture=neutral, PublicKeyToken=null</Type>
+  </ExtensionTypes>
+</WorkflowBuilder>
